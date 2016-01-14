@@ -6,7 +6,7 @@
  * Can post, retweet, like a tweet and respond to a tweet when messageID is given
  * inspired from Elisha - Simple Developer
  */
-package twitter4j.examples.tweets;
+package tweeter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
