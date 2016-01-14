@@ -32,12 +32,8 @@ import twitter4j.auth.RequestToken;
 class TweetUsingTwitter4JExample {
 
 	public static void main(String[] args) throws Exception, IOException, TwitterException {
-		
-	
-		
-		
-		
-		/***********/
+		// createTable(); // initialize MySql Database DOESN'T work yet....
+
 		// setAccounts(); /problem nicht public
 
 		// ULRIKE RAAB //my account
@@ -51,10 +47,13 @@ class TweetUsingTwitter4JExample {
 		String accessTokenSecret = "6v4ST6Y7AHr74kD9u32WPJQMtSeJ6xWT6I3eyP5dwuHWc";
 
 		//posting(consumerKey, consumerSecret, accessToken, accessTokenSecret);
-		//replyingToTweet(677937491094171651L,consumerKey, consumerSecret,accessToken, accessTokenSecret );
-		//retweeting(677937491094171651L, consumerKey2, consumerSecret2, accessToken2, accessTokenSecret2);
+		// replyingToTweet(677937491094171651L,consumerKey,
+		// consumerSecret,accessToken, accessTokenSecret );
+		// retweeting(677937491094171651L, consumerKey2, consumerSecret2,
+		// accessToken2, accessTokenSecret2);
 
-		//likingATweet(687285799096840193L, consumerKey, consumerSecret, accessToken, accessTokenSecret);
+		likingATweet(687285799096840193L, consumerKey, consumerSecret,
+		accessToken, accessTokenSecret);
 	}
 
 
@@ -63,16 +62,13 @@ class TweetUsingTwitter4JExample {
 
 	private static void retweeting(long messageId, String consumerKey, String consumerSecret, String accessToken,
 			String accessTokenSecret) throws TwitterException {
-		
 		// you cannot retweet your own tweet!
-		
 		TwitterFactory factory = new TwitterFactory();
 		Twitter twitter4 = factory.getInstance();
 		twitter4.setOAuthConsumer(consumerKey, consumerSecret);
 		AccessToken accessToken4 = new AccessToken(accessToken, accessTokenSecret);
 		twitter4.setOAuthAccessToken(accessToken4);
 		twitter4.retweetStatus(messageId);
-		
 
 	}
 
@@ -90,7 +86,6 @@ class TweetUsingTwitter4JExample {
 		Status status3 = twitter3.createFavorite(messageId);
 
 		logTwitterServerRespond(status3);
-		
 	}
 
 	public static void replyingToTweet(long messageId, String consumerKey, String consumerSecret, String accessToken,
