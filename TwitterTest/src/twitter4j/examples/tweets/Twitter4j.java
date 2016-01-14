@@ -3,9 +3,12 @@
  * Uses Twitter4j library (java)
  * Uses Twitter API 1.1
  * 
- * Can post, retweet, like a tweet and respond to a tweet when messageID is given
+ * Can tweet, retweet, like a tweet and respond to a tweet when messageID is given
  * inspired from Elisha - Simple Developer
  */
+
+
+
 package twitter4j.examples.tweets;
 
 import java.io.BufferedReader;
@@ -43,53 +46,19 @@ class TweetUsingTwitter4JExample {
 		// Your Twitter Access Token Secret
 		String accessTokenSecret = "6v4ST6Y7AHr74kD9u32WPJQMtSeJ6xWT6I3eyP5dwuHWc";
 
-		posting(consumerKey, consumerSecret, accessToken, accessTokenSecret);
+		//posting(consumerKey, consumerSecret, accessToken, accessTokenSecret);
 		// replyingToTweet(677937491094171651L,consumerKey,
 		// consumerSecret,accessToken, accessTokenSecret );
 		// retweeting(677937491094171651L, consumerKey2, consumerSecret2,
 		// accessToken2, accessTokenSecret2);
-		// likingATweet(677937491094171651L, consumerKey, consumerSecret,
-		// accessToken, accessTokenSecret);
+
+		likingATweet(687285799096840193L, consumerKey, consumerSecret,
+		accessToken, accessTokenSecret);
 	}
 
-	public static void createTable() throws Exception {
-		try {
-			Connection connection = getConnection();
-			PreparedStatement create = connection.prepareStatement(
-					"CREATE TABLE IF NOT EXISTS tablename(id int NOT NULL AUTO_INCREMENT,name varchar(50), text varrchar(140), messageid long, type varchar(20), PRIMARY KEY(id))");
-			create.executeUpdate();
 
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("e2");
-		}
-	}
 
-	public static Connection getConnection() throws Exception {
-		try {
-			String driver = "com.mysql.jdbc.Driver";
-			String url = "jdbc:mysql://localhost:3306/databasename";// when
-																	// using
-																	// localhost
-			// String url =
-			// "jdbc:mysql://24.196.52.166:3306/databasename";//when using IP
-			// adress
-			String username = "root";
-			String password = "Passwort9";
 
-			Class.forName(driver);
-
-			Connection connection = DriverManager.getConnection(url, username, password);
-
-			System.out.println("Connection to Database made");
-			return connection;
-
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("e");
-		}
-		return null;
-	}
 
 	private static void retweeting(long messageId, String consumerKey, String consumerSecret, String accessToken,
 			String accessTokenSecret) throws TwitterException {
