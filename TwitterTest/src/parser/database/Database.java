@@ -1,6 +1,7 @@
 package parser.database;
 
-import java.io.IOException;
+import parser.xmlParsing.Tweet;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,6 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * This class handles all low-level-activities on the database
+ * @author rom54494
+ *
+ */
 public class Database {
 	
 	//general stuff
@@ -15,6 +21,7 @@ public class Database {
 	private final String URL = "jdbc:mysql://localhost:3306/";
 	private final String USER_NAME = "root";
 	private final String PASSWORD = "root";
+	private final String DEFAULT = "DEFAULT";
 	
 	//TABLES
 	private final String TABLE_TWEET = "tweets";
@@ -40,19 +47,27 @@ public class Database {
 	private Statement statement;
 	private ResultSet results;
 	private PreparedStatement insertPerson;
-	private PreparedStatement insertLink;
+	private PreparedStatement insertTweet;
+	private PreparedStatement getPerson;
 
+	/**
+	 * Tries to establish a connection to the database, program exits if this fails
+	 */
 	public Database(){
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			connection = DriverManager.getConnection(URL+DATABASE_NAME, USER_NAME, PASSWORD);
 			statement = connection.createStatement();
 			prepareStatements();
-		} catch (Exception e) {
+		} catch (SQLException | InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			e.printStackTrace();
+			System.exit(-1 );
 		}
 	}
 	
+	/**
+	 * Declaration of all PreparedStatements needed for working on the database
+	 */
 	private void prepareStatements(){
 		try {
 			insertPerson = connection.prepareStatement("INSERT INTO " + TABLE_PERSON 
@@ -60,12 +75,39 @@ public class Database {
 					+ "VALUES "
 					+ "( "
 					+ "? , ? , ? , ?, ?);");
+			
+			insertTweet = connection.prepareStatement("INSERT INTO " + TABLE_TWEET 
+					+ " (" + TWEET_PID + ", " + TWEET_TEXT + ", " + TWEET_TYPE +") "
+					+ "VALUES "
+					+ "( "
+					+ "? , ? , ?);");
+			
+			getPerson = connection.prepareStatement("SELECT " + PERSON_NAME
+					+ " FROM " + TABLE_PERSON
+					+ " WHERE" + PERSON_ID + " = ?");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
+	/**
+	 * Returns the ID corresponding to the name of an entry in the table TABLE_PERSON
+	 * @param name The name of the person you want to search for in the database
+	 * @return The ID of the person corresponding to the name, {@code -1} if there were no matches of an error occurred
+	 */
+	private int getIDfromName(String name){
+		try {
+			getPerson.setString(1, name);
+			return getPerson.executeQuery().getInt(1);
+		} catch (SQLException e) {
+			return -1;
+		}
+	}
+	
+	/**
+	 * Removes all values from the database for rebuilding
+	 */
 	public void clearDatabase(){
 		try {
 			statement.execute("SET FOREIGN_KEY_CHECKS = 0");
@@ -77,7 +119,14 @@ public class Database {
 		}
 		
 	}
-	
+		
+	/**
+	 * Writes an entry into the table TABLE_PERSON
+	 * @param name Name of the person to be added
+	 * @param keys Twitter-API-Keys, must be 4
+	 * @return true if entry is inserted successfully <br> 
+	 * 		   false if wrong number of keys or SQL-Exception occurs
+	 */
 	public boolean insertIntoPerson(String name, String[] keys){
 		if(keys.length != 4){ return false;}
 		try {
@@ -90,5 +139,31 @@ public class Database {
 		} catch (SQLException e) {
 			return false;
 		}
+	}
+	
+	/**
+	 * Inserts a {@link parser.xmlParsing.Tweet} into the table TABLE_TWEET
+	 * @param tweet - Tweet to be added to the table
+	 * @return true if entry is inserted successvully <br>
+	 * 		   false if an error has occurred
+	 */
+	public boolean insertTweet(Tweet tweet){
+		int pid = getIDfromName(tweet.getSpeaker());
+		if(pid != -1 && tweet.getText() != null){
+			try {
+				insertTweet.setInt(1, pid);
+				insertTweet.setString(2, tweet.getText());
+				if(tweet.getType() == null){
+					insertTweet.setString(3, DEFAULT);
+				}
+				else{
+					insertTweet.setString(3, tweet.getType());
+				}
+				insertTweet.executeQuery();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
 	}
 }
