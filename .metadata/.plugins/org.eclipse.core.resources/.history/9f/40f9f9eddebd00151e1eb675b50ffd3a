@@ -155,7 +155,7 @@ class TweetUsingTwitter4JExample {
 		twitter.setOAuthAccessToken(new AccessToken(accessToken, accessTokenSecret));
 
 		// Instantiate and initialize a new twitter status update
-		StatusUpdate statusUpdate = new StatusUpdate("heut ist es total kalt... #frier");
+		StatusUpdate statusUpdate = new StatusUpdate("testtweet");
 
 		// attach any media, if you want to
 		// statusUpdate.setMedia(
