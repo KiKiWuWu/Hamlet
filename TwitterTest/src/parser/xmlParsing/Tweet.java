@@ -15,7 +15,12 @@ public class Tweet {
 	private String type = null;
 	
 	public Tweet(String speaker, String text, String type){
-		this.speaker = speaker;
+		if(speaker == null){ 
+			this.speaker = "Regie";
+		}
+		else{
+			this.speaker = speaker;
+		}
 		this.text = text;
 		this.type = type;
 	}

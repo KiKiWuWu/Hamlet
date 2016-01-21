@@ -2,10 +2,12 @@ package parser.xmlParsing;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
 
 import parser.database.DBCInterface;
@@ -16,8 +18,10 @@ public class XMLParser {
 	/** This array contains the tags of the XML which contain relevant text. */
 	private final String[] TEXT_TAGS = {"stage", "sp"};
 	
+	private Namespace ns;
 	private DBCInterface controller;
 	private Document doc;
+	private Element root;
 	private Element body;
 	private ElementList[] lists;
 	private ArrayList<Element> acts, scenes;
@@ -26,11 +30,13 @@ public class XMLParser {
 		this.controller = controller;
 		try {
 			doc = new SAXBuilder().build(PATH);
-			body = doc.getRootElement().getChild("body");
+			root = doc.getRootElement();
+			ns = root.getNamespace();
+			body = root.getChild("text", ns).getChild("body", ns);
 		} catch (IOException | JDOMException e) {
 			e.printStackTrace();
 		}
-		acts = new ArrayList<>(body.getChildren("div1"));
+		acts = new ArrayList<Element>(body.getChildren("div1", ns));
 	}
 	
 	/**
@@ -40,12 +46,13 @@ public class XMLParser {
 	private void initLists(Element scene){
 		lists = new ElementList[TEXT_TAGS.length];
 		for(int i = 0; i < lists.length; i++){
-			lists[i] = new ElementList(scene.getChildren(TEXT_TAGS[i]));
+			List el = scene.getChildren();
+			lists[i] = new ElementList(scene.getChildren(TEXT_TAGS[i], ns), ns);
 		}
 	}
 	
 	private void initScenes(Element act){
-		scenes = new ArrayList<>(act.getChildren("div2"));
+		scenes = new ArrayList<>(act.getChildren("div2", ns));
 	}
 	
 	/**
@@ -65,15 +72,19 @@ public class XMLParser {
 	/**
 	 * Looks at all {@link ElementList}s of {@code list} and determines which has the next line
 	 * to be processed.
+	 * @return The index of the ElementList in {@code lists} which holds the next line to be processed.
 	 */
 	private int getNextLine(){
+		int index = -1;
 		int min = Integer.MAX_VALUE;
-		for(ElementList el : lists){
-			if(el.getCurrentLineNumber() < min){
-				min = el.getCurrentLineNumber();
+		for(int i = 0; i < lists.length; i++){
+			int line = lists[i].getCurrentLineNumber();
+			if(line < min){
+				min = line;
+				index = i;
 			}
 		}
-		return min;
+		return index;
 	}
 	
 	public void run(){

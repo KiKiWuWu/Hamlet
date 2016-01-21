@@ -13,8 +13,8 @@ public class DatabaseController implements DBCInterface{
 	private XMLParser xmlParser;
 
 	public DatabaseController(){
-		db = new Database();
-		pp = new PersonParser(this);
+		/*db = new Database();
+		pp = new PersonParser(this);*/
 		xmlParser = new XMLParser(this, PATH_HAMLET);
 	}
 	
