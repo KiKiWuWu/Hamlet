@@ -3,7 +3,9 @@ package parser.xmlParsing;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jdom2.Attribute;
 import org.jdom2.Element;
+import org.jdom2.Namespace;
 
 /**
  * This class is designed to hold a list of {@link Element}, iterate over it and extract the data relevant for the database.
@@ -13,29 +15,68 @@ import org.jdom2.Element;
  *
  */
 public class ElementList {
+	
+	private final String TAG_SPEECH = "ab";
+	private final String TAG_SPEAKER = "speaker";
+	private final String ATTR_ID = "id";
 
+	private Namespace ns;
 	private List<Element> list;
 	private Iterator<Element> iter;
 	private Element currentElement;
 	private int currentLine;
+	private String currentText;
 	private String currentSpeaker;
 	
-	public ElementList(List<Element> list){
+	public ElementList(List<Element> list, Namespace ns){
+		this.ns = ns;
 		this.list = list;
 		currentLine = Integer.MAX_VALUE;
 		iter = this.list.iterator();
+		setNext();
+	}
+	
+	private void updateText(){
+		List<Element> textList;
+		String line = "";
+		if(currentElement.getChild(TAG_SPEECH, ns) != null){//speaker-text
+			textList = currentElement.getChild(TAG_SPEECH, ns).getChildren();
+		}
+		else{//stage-direction
+			textList = currentElement.getChildren();
+		}
+		for(Element e : textList){
+			line += e.getText();
+		}
+		currentText = line;
 	}
 	
 	/**
 	 * Takes a look at {@code currentElement} and reads the number of the current line from it
 	 * @return the new line number
 	 */
-	private int updateLineNumber(){
-		return 0;
+	private void updateLineNumber(){
+		String line;
+		if(currentElement.getChild(TAG_SPEECH, ns) != null){//speaker-text
+			line = currentElement.getChild(TAG_SPEECH, ns).getChild("w", ns).getAttribute(ATTR_ID, Namespace.XML_NAMESPACE).getValue();
+		}
+		else{//stage-direction
+			line = currentElement.getChild("w", ns).getAttribute(ATTR_ID, Namespace.XML_NAMESPACE).getValue();
+		}
+		line = line.replace("w", "");
+		currentLine = Integer.parseInt(line);
 	}
 	
+	/**
+	 * After going to the next line, the speaker has to be updated if possible (not for stage-directions etc.)
+	 */
 	private void updateSpeaker(){
-		
+		if(currentElement.getChild("speaker", ns) != null){
+			currentSpeaker = currentElement.getChild("speaker", ns).getChild("w", ns).getTextTrim();
+		}
+		else{
+			currentSpeaker = null;
+		}
 	}
 	
 	/**
@@ -43,7 +84,7 @@ public class ElementList {
 	 * @return A String with the text of the drama, corresponding to the current element
 	 */
 	public String getCurrentLineText(){
-		return null;
+		return currentText;
 	}
 	
 	/**
@@ -53,6 +94,9 @@ public class ElementList {
 		return currentLine;
 	}
 	
+	/**
+	 * @return The person who is saying the current line, {@code null} if no speaker
+	 */
 	public String getCurrentSpeaker(){
 		return currentSpeaker;
 	}
@@ -65,7 +109,8 @@ public class ElementList {
 	public boolean setNext(){
 		if(iter.hasNext()){
 			currentElement = iter.next();
-			currentLine = updateLineNumber();
+			updateLineNumber();
+			updateText();			
 			updateSpeaker();
 			return true;
 		}
