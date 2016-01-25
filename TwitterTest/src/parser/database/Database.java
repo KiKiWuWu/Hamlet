@@ -51,7 +51,8 @@ public class Database {
 	private PreparedStatement getPerson;
 
 	/**
-	 * Tries to establish a connection to the database, program exits if this fails
+	 * Tries to establish a connection to the database, program exits if this fails <br>
+	 * because all other parts of the program rely on the database working
 	 */
 	public Database(){
 		try {
@@ -148,20 +149,17 @@ public class Database {
 	 * 		   false if an error has occurred
 	 */
 	public boolean insertTweet(Tweet tweet){
-		int pid = getIDfromName(tweet.getSpeaker());
+		//int pid = getIDfromName(tweet.getSpeaker());
+		int pid = 1;
 		if(pid != -1 && tweet.getText() != null){
 			try {
 				insertTweet.setInt(1, pid);
 				insertTweet.setString(2, tweet.getText());
-				if(tweet.getType() == null){
-					insertTweet.setString(3, DEFAULT);
-				}
-				else{
-					insertTweet.setString(3, tweet.getType());
-				}
-				insertTweet.executeQuery();
+				insertTweet.setString(3, tweet.getType());
+				insertTweet.execute();
 			} catch (SQLException e) {
 				e.printStackTrace();
+				return false;
 			}
 		}
 		return true;

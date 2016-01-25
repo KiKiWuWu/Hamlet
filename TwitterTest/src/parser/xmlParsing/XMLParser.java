@@ -2,7 +2,6 @@ package parser.xmlParsing;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -13,6 +12,11 @@ import org.jdom2.input.SAXBuilder;
 import parser.database.DBCInterface;
 import parser.xmlParsing.ElementList;
 
+/**
+ * This class is resonsible for parsing the XML-file of the play.
+ * @author rom54494
+ *
+ */
 public class XMLParser {
 	
 	/** This array contains the tags of the XML which contain relevant text. */
@@ -26,6 +30,10 @@ public class XMLParser {
 	private ElementList[] lists;
 	private ArrayList<Element> acts, scenes;
 	
+	/**
+	 * @param controller Receives the lines when the are parsed
+	 * @param PATH Path to the XML-file of the play
+	 */
 	public XMLParser(DBCInterface controller, final String PATH){
 		this.controller = controller;
 		try {
@@ -46,11 +54,14 @@ public class XMLParser {
 	private void initLists(Element scene){
 		lists = new ElementList[TEXT_TAGS.length];
 		for(int i = 0; i < lists.length; i++){
-			List el = scene.getChildren();
 			lists[i] = new ElementList(scene.getChildren(TEXT_TAGS[i], ns), ns);
 		}
 	}
 	
+	/**
+	 * Fills {@code scenes} for the current act
+	 * @param act The current act from which the scenes shall be extraced
+	 */
 	private void initScenes(Element act){
 		scenes = new ArrayList<>(act.getChildren("div2", ns));
 	}
@@ -62,7 +73,7 @@ public class XMLParser {
 	 */
 	private boolean elementsLeft(){
 		for(ElementList el : lists){
-			if(el.hasNext()){
+			if(el.isDoneParsing() == false){
 				return true;
 			}
 		}
@@ -78,15 +89,22 @@ public class XMLParser {
 		int index = -1;
 		int min = Integer.MAX_VALUE;
 		for(int i = 0; i < lists.length; i++){
-			int line = lists[i].getCurrentLineNumber();
-			if(line < min){
-				min = line;
-				index = i;
+			if(lists[i].isDoneParsing() == false){
+				int line = lists[i].getCurrentLineNumber();
+				if(line < min){
+					min = line;
+					index = i;
+				}
 			}
 		}
 		return index;
 	}
 	
+	/**
+	 * Method responsible for parsing the XML. <br>
+	 * The file will be parsed and the contents will be given back by calling
+	 * {@code insertLine} of the {@link DBCInterface}.
+	 */
 	public void run(){
 		for(int numAct = 0; numAct < 1; numAct++){
 			initScenes(acts.get(numAct));
@@ -94,8 +112,12 @@ public class XMLParser {
 				initLists(scenes.get(numScene));
 				while(elementsLeft()){
 					int curr = getNextLine();
-					Tweet t = new Tweet(lists[curr].getCurrentSpeaker(), lists[curr].getCurrentLineText(), null);
-					controller.insertLine(t);
+					String speaker = lists[curr].getCurrentSpeaker();
+					ArrayList<String> textList = lists[curr].getCurrentLineText();
+					for(String s : textList){
+						Tweet t = new Tweet(speaker, s, null);
+						controller.insertLine(t);
+					}
 					lists[curr].setNext();
 				}
 			}				

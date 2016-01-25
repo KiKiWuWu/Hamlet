@@ -3,7 +3,7 @@ package parser.database;
 import parser.xmlParsing.Tweet;
 
 /**
- * This interface is responsible to write entries into the corresponding database
+ * This interface is responsible to write entries, person-names and {@link Tweet}s into the corresponding database
  * @author rom54494
  *
  */
