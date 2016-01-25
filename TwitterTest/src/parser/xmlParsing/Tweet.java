@@ -3,7 +3,6 @@ package parser.xmlParsing;
 /**
  * Class containing all necessary informations for the tweet to be posted on Twitter
  * @author rom54494
- *
  */
 public class Tweet {
 	
@@ -14,6 +13,12 @@ public class Tweet {
 	/** Will it be handled as a Tweet, Response or something else */
 	private String type = null;
 	
+	/**
+	 * 
+	 * @param speaker The person who said the line
+	 * @param text The line itself
+	 * @param type Type how it will be handled for Twitter (Tweet, Response etc.)
+	 */
 	public Tweet(String speaker, String text, String type){
 		if(speaker == null){ 
 			this.speaker = "Regie";
@@ -62,7 +67,7 @@ public class Tweet {
 	public boolean setType(String type){
 		//TODO blub
 		if(type.equals(type)){
-			this.type = type;
+			this.type = "response";
 			return true;
 		}
 		else{
@@ -75,9 +80,13 @@ public class Tweet {
 	 * will only back a String of the correct type (or null)
 	 */
 	public String getType(){
-		return type;
+		//return type;
+		return "response";
 	}
 	
+	/**
+	 * @return A String consisting of "speaker : text"
+	 */
 	@Override
 	public String toString(){
 		return speaker + ": " + text;

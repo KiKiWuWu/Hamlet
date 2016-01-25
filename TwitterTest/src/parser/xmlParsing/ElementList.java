@@ -1,9 +1,10 @@
 package parser.xmlParsing;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
 
-import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 
@@ -27,15 +28,25 @@ public class ElementList {
 	private int currentLine;
 	private String currentText;
 	private String currentSpeaker;
+	private boolean doneParsing;
 	
+	/**
+	 * @param list A list of {@link Element}s of a certain kind containing all lines to be parsed
+	 * @param ns Namespace for the Elements, may be {@code null} for no namespace
+	 */
 	public ElementList(List<Element> list, Namespace ns){
 		this.ns = ns;
 		this.list = list;
+		doneParsing = false;
 		currentLine = Integer.MAX_VALUE;
 		iter = this.list.iterator();
 		setNext();
 	}
 	
+	/**
+	 * Updates {@code currentLine}. For this, {@code currentElement} is examined and parsed
+	 * accordingly to whether it is a stage-direction or something said by an actor 
+	 */
 	private void updateText(){
 		List<Element> textList;
 		String line = "";
@@ -46,7 +57,13 @@ public class ElementList {
 			textList = currentElement.getChildren();
 		}
 		for(Element e : textList){
-			line += e.getText();
+			String tag = e.getName();
+			if(tag == "w" || tag == "c" || tag == "pc"){//character
+				line += e.getText();
+			}
+			else if(tag == "lb"){//linebreak
+				line += System.getProperty("line.separator");
+			}
 		}
 		currentText = line;
 	}
@@ -81,10 +98,21 @@ public class ElementList {
 	
 	/**
 	 * Looks at {@code currentElement} and parses the drama-text from it
-	 * @return A String with the text of the drama, corresponding to the current element
+	 * @return All strings for the current spoken text
 	 */
-	public String getCurrentLineText(){
-		return currentText;
+	public ArrayList<String> getCurrentLineText(){
+		ArrayList<String > result = new ArrayList<>();
+		StringTokenizer tokenizer = new StringTokenizer(currentText, System.getProperty("line.separator"));
+		if(tokenizer.hasMoreTokens() == false){//only one line
+			result.add(currentText);
+			return result;
+		}
+		else{
+			while(tokenizer.hasMoreTokens()){
+				result.add(tokenizer.nextToken());
+			}
+			return result;
+		}
 	}
 	
 	/**
@@ -115,17 +143,18 @@ public class ElementList {
 			return true;
 		}
 		else{
+			doneParsing = true;//horrible hack, used to fix bug of not catching last line
 			return false;
 		}
 	}
 	
 	/**
-	 * Checks the list (via the iterator) if any more {@link Elements} are left
-	 * @return true if the are more Elements to work with
-	 * <br> false if at the end of the list
+	 * Checks if any more {@link Elements} are left to parse
+	 * @return false if the are more Elements to work with
+	 * <br> true if at the end of the list
 	 */
-	public boolean hasNext(){
-		if(iter.hasNext()){
+	public boolean isDoneParsing(){
+		if(doneParsing == true){
 			return true;
 		}
 		else{

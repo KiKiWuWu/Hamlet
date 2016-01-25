@@ -12,6 +12,9 @@ public class DatabaseController implements DBCInterface{
 	private PersonParser pp;
 	private XMLParser xmlParser;
 
+	/**
+	 * Initializes all modules or sub-controllers for the whole program here
+	 */
 	public DatabaseController(){
 		db = new Database();
 		pp = new PersonParser(this);
@@ -27,10 +30,9 @@ public class DatabaseController implements DBCInterface{
 	
 	@Override
 	public void insertLine(Tweet tweet){
-		/*if(db.insertTweet(tweet) == false){
+		if(db.insertTweet(tweet) == false){
 			System.err.println("NOT ABLE TO INSERT LINE " + tweet);
-		}*/
-		System.out.println(tweet.toString());
+		}
 	}
 	
 	/**
