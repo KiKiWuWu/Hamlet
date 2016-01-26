@@ -7,11 +7,11 @@ package parser.xmlParsing;
 public class Tweet {
 	
 	/** Who said the line */
-	private String speaker = null;
+	private String speaker;
 	/**	What did the person say */
-	private String text = null;
+	private String text;
 	/** Will it be handled as a Tweet, Response or something else */
-	private String type = null;
+	private String type;
 	
 	/**
 	 * 
@@ -26,15 +26,18 @@ public class Tweet {
 		else{
 			this.speaker = speaker;
 		}
+		
+		if(type == null){
+			this.type = "response";
+		}
+		else if(type.equals("tweet")){
+			this.type = type;
+		}
+		else{
+			this.type = "response";
+		}
+		
 		this.text = text;
-		this.type = type;
-	}
-	/**
-	 * Adds the speaker of the current line of text
-	 * @param speaker Name of the speaker
-	 */
-	public void setSpeaker(String speaker){
-		this.speaker = speaker;
 	}
 	
 	/**
@@ -45,14 +48,6 @@ public class Tweet {
 	}
 	
 	/**
-	 * Adds a String which represents the current line spoken
-	 * @param text Current spoken line or NULL if no line has been added previously
-	 */
-	public void setText(String text){
-		this.text = text;
-	}
-	
-	/**
 	 * @return The line spoken by the speaker
 	 */
 	public String getText(){
@@ -60,28 +55,11 @@ public class Tweet {
 	}
 	
 	/**
-	 * Adds a string which determines if the line is to be handled as a response, a retweet or a normal tweet
-	 * @param type String, may only be of ... 
-	 * @return true if the type has been changed successfully <br> false if the type couldn't be changed	 * 
-	 */
-	public boolean setType(String type){
-		//TODO blub
-		if(type.equals(type)){
-			this.type = "response";
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	
-	/**
 	 * @return The type of the line previously specified or {@code null} when no type has been set yet. Calling this method
 	 * will only back a String of the correct type (or null)
 	 */
 	public String getType(){
-		//return type;
-		return "response";
+		return type;
 	}
 	
 	/**
@@ -91,4 +69,19 @@ public class Tweet {
 	public String toString(){
 		return speaker + ": " + text;
 	}
+	
+	/**
+	 * Adds a string which determines if the line is to be handled as a response, a retweet or a normal tweet
+	 * @param type String, may only be of ... 
+	 * @return true if the type has been changed successfully <br> false if the type couldn't be changed	 * 
+	 */
+	/*public void setType(String type){
+		if(type.equals("tweet") == false){
+			this.type = "response";
+		}
+		else{
+			this.type = type;
+		}
+	}*/
+	
 }
