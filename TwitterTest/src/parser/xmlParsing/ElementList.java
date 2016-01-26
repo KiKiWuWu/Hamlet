@@ -19,16 +19,19 @@ public class ElementList {
 	
 	private final String TAG_SPEECH = "ab";
 	private final String TAG_SPEAKER = "speaker";
+	private final String TAG_WORD = "w";
+	private final String TAG_CHAR = "c";
+	private final String TAG_PUNC = "pc";
+	private final String TAG_LB = "lb";
 	private final String ATTR_ID = "id";
+	private final String ATTR_WHO = "who";
 
 	private Namespace ns;
-	private List<Element> list;
 	private Iterator<Element> iter;
 	private Element currentElement;
 	private int currentLine;
 	private String currentText;
 	private String currentSpeaker;
-	private boolean doneParsing;
 	
 	/**
 	 * @param list A list of {@link Element}s of a certain kind containing all lines to be parsed
@@ -36,10 +39,8 @@ public class ElementList {
 	 */
 	public ElementList(List<Element> list, Namespace ns){
 		this.ns = ns;
-		this.list = list;
-		doneParsing = false;
 		currentLine = Integer.MAX_VALUE;
-		iter = this.list.iterator();
+		iter = list.iterator();
 		setNext();
 	}
 	
@@ -58,10 +59,10 @@ public class ElementList {
 		}
 		for(Element e : textList){
 			String tag = e.getName();
-			if(tag == "w" || tag == "c" || tag == "pc"){//character
+			if(tag.equals(TAG_WORD) || tag.equals(TAG_CHAR)|| tag.equals(TAG_PUNC)){//character
 				line += e.getText();
 			}
-			else if(tag == "lb"){//linebreak
+			else if(tag.equals(TAG_LB)){//linebreak
 				line += System.getProperty("line.separator");
 			}
 		}
@@ -69,27 +70,28 @@ public class ElementList {
 	}
 	
 	/**
-	 * Takes a look at {@code currentElement} and reads the number of the current line from it
+	 * Takes a look at {@code currentElement} and reads the number of the current line from it.
 	 * @return the new line number
 	 */
 	private void updateLineNumber(){
 		String line;
 		if(currentElement.getChild(TAG_SPEECH, ns) != null){//speaker-text
-			line = currentElement.getChild(TAG_SPEECH, ns).getChild("w", ns).getAttribute(ATTR_ID, Namespace.XML_NAMESPACE).getValue();
+			line = currentElement.getChild(TAG_SPEECH, ns).getChild(TAG_WORD, ns).getAttribute(ATTR_ID, Namespace.XML_NAMESPACE).getValue();
 		}
 		else{//stage-direction
-			line = currentElement.getChild("w", ns).getAttribute(ATTR_ID, Namespace.XML_NAMESPACE).getValue();
+			line = currentElement.getChild(TAG_WORD, ns).getAttribute(ATTR_ID, Namespace.XML_NAMESPACE).getValue();
 		}
 		line = line.replace("w", "");
 		currentLine = Integer.parseInt(line);
 	}
 	
 	/**
-	 * After going to the next line, the speaker has to be updated if possible (not for stage-directions etc.)
+	 * After going to the next line, the speaker has to be updated if possible (not for stage-directions etc.)<br>
+	 * Will set {@code currentSpeaker} to {@code null} if no speaker can be found.
 	 */
 	private void updateSpeaker(){
-		if(currentElement.getChild("speaker", ns) != null){
-			currentSpeaker = currentElement.getChild("speaker", ns).getChild("w", ns).getTextTrim();
+		if(currentElement.getChild(TAG_SPEAKER, ns) != null){
+			currentSpeaker = currentElement.getAttributeValue(ATTR_WHO);
 		}
 		else{
 			currentSpeaker = null;
@@ -97,7 +99,7 @@ public class ElementList {
 	}
 	
 	/**
-	 * Looks at {@code currentElement} and parses the drama-text from it
+	 * Looks at {@code currentElement} and parses the drama-text from it.
 	 * @return All strings for the current spoken text
 	 */
 	public ArrayList<String> getCurrentLineText(){
@@ -105,14 +107,13 @@ public class ElementList {
 		StringTokenizer tokenizer = new StringTokenizer(currentText, System.getProperty("line.separator"));
 		if(tokenizer.hasMoreTokens() == false){//only one line
 			result.add(currentText);
-			return result;
 		}
 		else{
 			while(tokenizer.hasMoreTokens()){
 				result.add(tokenizer.nextToken());
 			}
-			return result;
 		}
+		return result;
 	}
 	
 	/**
@@ -140,21 +141,6 @@ public class ElementList {
 			updateLineNumber();
 			updateText();			
 			updateSpeaker();
-			return true;
-		}
-		else{
-			doneParsing = true;//horrible hack, used to fix bug of not catching last line
-			return false;
-		}
-	}
-	
-	/**
-	 * Checks if any more {@link Elements} are left to parse
-	 * @return false if the are more Elements to work with
-	 * <br> true if at the end of the list
-	 */
-	public boolean isDoneParsing(){
-		if(doneParsing == true){
 			return true;
 		}
 		else{

@@ -21,14 +21,20 @@ public class XMLParser {
 	
 	/** This array contains the tags of the XML which contain relevant text. */
 	private final String[] TEXT_TAGS = {"stage", "sp"};
-	
+	/** Namespace for the xml, is read from it directly */
 	private Namespace ns;
+	/** Responsible for handling the insertion of tweets into the database */
 	private DBCInterface controller;
+	/** The XML itself */
 	private Document doc;
+	/** Root-element of the XML, only used to get {@code body} but kept for possible future use */
 	private Element root;
+	/** Main contents of the XML the whole play is stored within */
 	private Element body;
-	private ElementList[] lists;
+	/** These hold the XML for the acts or scenes respectively */
 	private ArrayList<Element> acts, scenes;
+	/** These hold the specific elements to be processed for each scene */
+	private ArrayList<ElementList> lists;
 	
 	/**
 	 * @param controller Receives the lines when the are parsed
@@ -52,9 +58,9 @@ public class XMLParser {
 	 * tag in this array an {@link ElementList} with the data in {@code body}.
 	 */
 	private void initLists(Element scene){
-		lists = new ElementList[TEXT_TAGS.length];
-		for(int i = 0; i < lists.length; i++){
-			lists[i] = new ElementList(scene.getChildren(TEXT_TAGS[i], ns), ns);
+		lists = new ArrayList<>();
+		for(int i = 0; i < TEXT_TAGS.length; i++){
+			lists.add( new ElementList(scene.getChildren(TEXT_TAGS[i], ns), ns) );
 		}
 	}
 	
@@ -72,12 +78,12 @@ public class XMLParser {
 	 * <br> false if all elements have been parsed and added to the database
 	 */
 	private boolean elementsLeft(){
-		for(ElementList el : lists){
-			if(el.isDoneParsing() == false){
-				return true;
-			}
+		if(lists.size() == 0){
+			return false;
 		}
-		return false;
+		else{
+			return true;
+		}
 	}
 	
 	/**
@@ -88,16 +94,24 @@ public class XMLParser {
 	private int getNextLine(){
 		int index = -1;
 		int min = Integer.MAX_VALUE;
-		for(int i = 0; i < lists.length; i++){
-			if(lists[i].isDoneParsing() == false){
-				int line = lists[i].getCurrentLineNumber();
-				if(line < min){
-					min = line;
-					index = i;
-				}
+		for(int i = 0; i < lists.size(); i++){
+			int line = lists.get(i).getCurrentLineNumber();
+			if(line < min){
+				min = line;
+				index = i;
 			}
 		}
 		return index;
+	}
+	
+	/**
+	 * Gives the controller a {@link Tweet} with the initial informations about the scene to follow
+	 * @param act the current act
+	 * @param scene the current scene
+	 */
+	private void constructInitialSceneTweet(int act, int scene){
+		Tweet t = new Tweet(null, "Act " + act + " Scene " + scene, "tweet");
+		controller.insertLine(t);
 	}
 	
 	/**
@@ -106,19 +120,28 @@ public class XMLParser {
 	 * {@code insertLine} of the {@link DBCInterface}.
 	 */
 	public void run(){
+		Tweet t;
+		int curr;
+		String speaker;
+		ArrayList<String> textList;
+		
 		for(int numAct = 0; numAct < 1; numAct++){
 			initScenes(acts.get(numAct));
 			for(int numScene = 0; numScene < 1; numScene++){
+				constructInitialSceneTweet(numAct+1, numScene+1);
 				initLists(scenes.get(numScene));
 				while(elementsLeft()){
-					int curr = getNextLine();
-					String speaker = lists[curr].getCurrentSpeaker();
-					ArrayList<String> textList = lists[curr].getCurrentLineText();
+					curr = getNextLine();
+					speaker = lists.get(curr).getCurrentSpeaker();
+					textList = lists.get(curr).getCurrentLineText();
 					for(String s : textList){
-						Tweet t = new Tweet(speaker, s, null);
+						t = new Tweet(speaker, s, null);
 						controller.insertLine(t);
 					}
-					lists[curr].setNext();
+					//removes list so it doesn't have to be checked every time if elements are left
+					if(lists.get(curr).setNext() == false){
+						lists.remove(curr);
+					}
 				}
 			}				
 		}

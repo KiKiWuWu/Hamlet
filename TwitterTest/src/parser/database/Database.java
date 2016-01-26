@@ -51,7 +51,7 @@ public class Database {
 	private PreparedStatement getPerson;
 
 	/**
-	 * Tries to establish a connection to the database, program exits if this fails <br>
+	 * Tries to establish a connection to the database, program exits if this fails 
 	 * because all other parts of the program rely on the database working
 	 */
 	public Database(){
@@ -158,7 +158,6 @@ public class Database {
 				insertTweet.setString(3, tweet.getType());
 				insertTweet.execute();
 			} catch (SQLException e) {
-				e.printStackTrace();
 				return false;
 			}
 		}
