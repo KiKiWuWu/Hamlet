@@ -1,0 +1,45 @@
+package tweeter;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.mysql.jdbc.Statement;
+
+public class TwitterDatabaseController {
+	
+	private DatabaseConnection dc;
+	
+	private void initDatabaseConnectionControllers(){
+		dc = new DatabaseConnection();	
+	}
+		
+	private void runHamletTweets(){ //while schleife mit methode; Hauptmethode
+		//get important things from databaseconnection
+		System.out.println("get started");
+		
+		//get Person ID from Table "tweets"
+		dc.prepareStatements();
+		//dc.getIDfromName("hamlet");
+		//System.out.println(dc.getIDfromName("hamlet"));
+		
+		dc.getPersonIDsfromTweetTable();
+		
+	
+		
+		 
+		System.out.println("end");
+		
+		
+		//twitter4j.tweet(person, tweet_text,...)	
+		 
+		 
+	}
+	
+	public void run(){
+		initDatabaseConnectionControllers();
+		runHamletTweets(); 
+	}
+	
+	
+
+}

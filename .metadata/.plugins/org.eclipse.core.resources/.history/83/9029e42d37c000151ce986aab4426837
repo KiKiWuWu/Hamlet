@@ -1,0 +1,31 @@
+package tweeter;
+
+import parser.database.DatabaseController;
+
+public class TwitterDatabaseController {
+
+	
+	private DatabaseConnection dc;
+	
+	private void initDatabaseConnectionControllers(){
+		dc = new DatabaseConnection();	
+	}
+		
+	private void runHamletTweets(){ //while schleife mit methode; Hauptmethode
+		//get important things from databaseconnection
+		System.out.println("get started");
+		
+		System.out.println(dc.getIDfromName("tim_wutz"));
+		
+		
+		//twitter4j.tweet(person, tweet_text,...)	
+	}
+	
+	public void run(){
+		initDatabaseConnectionControllers();
+		runHamletTweets(); 
+	}
+	
+	
+
+}

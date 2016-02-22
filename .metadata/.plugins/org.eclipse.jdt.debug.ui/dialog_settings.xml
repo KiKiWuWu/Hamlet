@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.jdt.debug.ui.MAIN_METHOD_SELECTION_DIALOG">
+		<item value="true" key="ShowStatusLine"/>
+		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;History&gt;&#x0A;&lt;historyRootNode&gt;&#x0A;&lt;infoNode&gt;=TwitterTest/\/Users\/Ulrike\/Downloads\/twitter4j-4.0.4\/lib\/twitter4j-core-4.0.4.jar&amp;lt;twitter4j(Version.class[Version&lt;/infoNode&gt;&#x0A;&lt;infoNode&gt;=TwitterTest/src&amp;lt;tweeter{Twitter4j.java[TweetUsingTwitter4JExample&lt;/infoNode&gt;&#x0A;&lt;infoNode&gt;=TwitterTest/src&amp;lt;tweeter{App.java[App&lt;/infoNode&gt;&#x0A;&lt;/historyRootNode&gt;&#x0A;&lt;/History&gt;" key="History"/>
+		<section name="DialogBoundsSettings">
+			<item value="600" key="DIALOG_WIDTH"/>
+			<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
+			<item value="500" key="DIALOG_HEIGHT"/>
+			<item value="100" key="DIALOG_X_ORIGIN"/>
+			<item value="-12" key="DIALOG_Y_ORIGIN"/>
+		</section>
+	</section>
+</section>
