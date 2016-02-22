@@ -1,0 +1,23 @@
+package tweeter;
+
+import parser.database.DatabaseController;
+
+public class DatabaseConnectionController {
+
+	
+	private DatabaseConnection dcc;
+	
+	private void initDatabaseConnectionControllers(){
+		dcc = new DatabaseConnection();	
+	}
+		
+	private void runDatabaseConnectionControllers(){
+		//dcc.run();	
+	}
+	
+	public void run(){
+		initDatabaseConnectionControllers();
+		runDatabaseConnectionControllers();
+	}
+
+}

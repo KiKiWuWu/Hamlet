@@ -1,4 +1,8 @@
 *.class
 TwitterTest/.classpath
 TwitterTest/.project
+
 TwitterTest/res/folger/*
+
+TwitterTest/.metadata
+
