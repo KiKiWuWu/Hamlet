@@ -2,7 +2,6 @@ package parser.xmlParsing;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
