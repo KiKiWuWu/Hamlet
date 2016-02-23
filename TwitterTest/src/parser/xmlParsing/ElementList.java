@@ -1,13 +1,9 @@
 package parser.xmlParsing;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import org.jdom2.Element;
-import org.jdom2.Namespace;
 
 /**
  * This class is designed to hold a list of {@link Element}, iterate over it and
