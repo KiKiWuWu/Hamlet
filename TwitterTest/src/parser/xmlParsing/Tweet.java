@@ -21,7 +21,7 @@ public class Tweet {
 	 * @param text The line itself
 	 * @param type Type how it will be handled for Twitter (Tweet, Response etc.)
 	 */
-	public Tweet(String speaker, String text, String type){
+	public Tweet(String speaker, String text, String type, int lineNumber){
 		if(speaker == null){ 
 			this.speaker = "Regie";
 		}
@@ -40,6 +40,8 @@ public class Tweet {
 		}
 		
 		this.text = text;
+		
+		this.lineNumber = lineNumber;
 	}
 	
 	/**
@@ -73,6 +75,7 @@ public class Tweet {
 	 */
 	@Override
 	public String toString(){
+		//return speaker + ": " + text + " , " + lineNumber;
 		return speaker + ": " + text;
 	}
 	/**
