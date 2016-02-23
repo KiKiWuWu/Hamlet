@@ -2,6 +2,7 @@ package parser.xmlParsing;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -53,14 +54,36 @@ public class XMLParser {
 		acts = new ArrayList<Element>(body.getChildren("div1", ns));
 	}
 	
+	private LinkedList<Element> buildResultList(Element head, String tag){
+		LinkedList<Element> result = new LinkedList<Element>();
+		if(head.getName().equals(tag)){
+			result.add(head);
+		}
+		else{
+			for(Element e : head.getChildren()){
+				if(e.getName().equals(tag)){
+					result.add(e);
+				}
+				else{
+					result.addAll(buildResultList(e, tag));
+				}
+			}
+		}
+		return result;
+	}
+	
 	/**
 	 * Creates the array {@code lists} with the same size as {@code TEXT_TAGS} and creates for each
 	 * tag in this array an {@link ElementList} with the data in {@code body}.
 	 */
 	private void initLists(Element scene){
-		lists = new ArrayList<>();
+		lists = new ArrayList<ElementList>();
 		for(int i = 0; i < TEXT_TAGS.length; i++){
-			lists.add( new ElementList(scene.getChildren(TEXT_TAGS[i], ns), ns) );
+			LinkedList<Element> resultList = new LinkedList<Element>();
+			for(Element e : scene.getChildren()){
+				resultList.addAll(buildResultList(e, TEXT_TAGS[i]));
+			}
+			lists.add( new ElementList(resultList, ns) );
 		}
 	}
 	
@@ -124,16 +147,17 @@ public class XMLParser {
 		int curr;
 		String speaker;
 		ArrayList<String> textList;
-		
-		for(int numAct = 0; numAct < 1; numAct++){
+		/*ArrayList<Tweet> tl = new ArrayList<Tweet>();
+		tl.sort(new TweetComperator());*/
+		for(int numAct = 3; numAct < 4; numAct++){
 			initScenes(acts.get(numAct));
-			for(int numScene = 0; numScene < 1; numScene++){
+			for(int numScene = 4; numScene < 5; numScene++){
 				constructInitialSceneTweet(numAct+1, numScene+1);
 				initLists(scenes.get(numScene));
 				while(elementsLeft()){
 					curr = getNextLine();
 					speaker = lists.get(curr).getCurrentSpeaker();
-					textList = lists.get(curr).getCurrentLineText();
+					textList = new ArrayList<String>(lists.get(curr).getCurrentLineText());
 					for(String s : textList){
 						t = new Tweet(speaker, s, null);
 						controller.insertLine(t);

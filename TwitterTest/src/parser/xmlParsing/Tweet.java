@@ -12,6 +12,8 @@ public class Tweet {
 	private String text;
 	/** Will it be handled as a Tweet, Response or something else */
 	private String type;
+	/** Number of the line/character */
+	private int lineNumber;
 	
 	/**
 	 * 
@@ -62,6 +64,10 @@ public class Tweet {
 		return type;
 	}
 	
+	public int getLineNumber(){
+		return lineNumber;
+	}
+	
 	/**
 	 * @return A String consisting of "speaker : text"
 	 */
@@ -69,7 +75,6 @@ public class Tweet {
 	public String toString(){
 		return speaker + ": " + text;
 	}
-	
 	/**
 	 * Adds a string which determines if the line is to be handled as a response, a retweet or a normal tweet
 	 * @param type String, may only be of ... 
