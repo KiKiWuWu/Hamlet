@@ -18,6 +18,7 @@ import org.jdom2.Namespace;
 public class ElementList {
 	
 	private final String TAG_SPEECH = "ab";
+	private final String TAG_SEGMENT = "seg";
 	private final String TAG_SPEAKER = "speaker";
 	private final String TAG_WORD = "w";
 	private final String TAG_CHAR = "c";
@@ -51,8 +52,13 @@ public class ElementList {
 	private void updateText(){
 		List<Element> textList;
 		String line = "";
-		if(currentElement.getChild(TAG_SPEECH, ns) != null){//speaker-text
-			textList = currentElement.getChild(TAG_SPEECH, ns).getChildren();
+		if(currentElement.getChild(TAG_SPEECH, ns) != null){
+			if (currentElement.getChild(TAG_SPEECH, ns).getChild(TAG_SEGMENT, ns) != null){//appears in songs
+				textList = currentElement.getChild(TAG_SPEECH, ns).getChild(TAG_SEGMENT, ns).getChildren();
+			}
+			else{//speaker text
+				textList = currentElement.getChild(TAG_SPEECH, ns).getChildren();
+			}
 		}
 		else{//stage-direction
 			textList = currentElement.getChildren();
@@ -76,7 +82,14 @@ public class ElementList {
 	private void updateLineNumber(){
 		String line;
 		if(currentElement.getChild(TAG_SPEECH, ns) != null){//speaker-text
-			line = currentElement.getChild(TAG_SPEECH, ns).getChild(TAG_WORD, ns).getAttribute(ATTR_ID, Namespace.XML_NAMESPACE).getValue();
+			if(currentElement.getChild(TAG_SPEECH, ns).getChild(TAG_SEGMENT, ns) != null){
+				line = currentElement.getChild(TAG_SPEECH, ns).getChild(TAG_SEGMENT, ns).getChild(TAG_WORD, ns)
+						.getAttribute(ATTR_ID, Namespace.XML_NAMESPACE).getValue();
+			}
+			else{ //songs etc.
+				line = currentElement.getChild(TAG_SPEECH, ns).getChild(TAG_WORD, ns)
+						.getAttribute(ATTR_ID, Namespace.XML_NAMESPACE).getValue();
+			}
 		}
 		else{//stage-direction
 			line = currentElement.getChild(TAG_WORD, ns).getAttribute(ATTR_ID, Namespace.XML_NAMESPACE).getValue();
@@ -102,7 +115,7 @@ public class ElementList {
 	 * Looks at {@code currentElement} and parses the drama-text from it.
 	 * @return All strings for the current spoken text
 	 */
-	public ArrayList<String> getCurrentLineText(){
+	public List<String> getCurrentLineText(){
 		ArrayList<String > result = new ArrayList<>();
 		StringTokenizer tokenizer = new StringTokenizer(currentText, System.getProperty("line.separator"));
 		if(tokenizer.hasMoreTokens() == false){//only one line
