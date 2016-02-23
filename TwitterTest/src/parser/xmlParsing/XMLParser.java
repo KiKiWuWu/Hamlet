@@ -64,7 +64,7 @@ public class XMLParser {
 	 * @param scene the current scene
 	 */
 	private Tweet constructInitialSceneTweet(int act, int scene){
-		return new Tweet(null, "Act " + act + " Scene " + scene, "tweet", -1);
+		return new Tweet("Regie", "Act " + act + " Scene " + scene, "tweet");
 	}
 	
 	/**
@@ -74,17 +74,20 @@ public class XMLParser {
 	 */
 	public void run(){
 		ArrayList<Tweet> tl = new ArrayList<Tweet>();
-
-		for(int numAct = 3; numAct < 4; numAct++){
-			initScenes(acts.get(numAct));
-			for(int numScene = 4; numScene < 5; numScene++){
+		int numAct = 0;
+		for(Element act : acts){
+			int numScene = 0;
+			initScenes(act);
+			for(Element scene : scenes){
 				tl.add(constructInitialSceneTweet(numAct+1, numScene+1));;
-				ElementList elist = new ElementList(scenes.get(numScene)); 
+				ElementList elist = new ElementList(scene); 
 				tl.addAll(elist.getTweets());
 				for(Tweet t : tl){
 					controller.insertLine(t);
 				}
-			}				
+				numScene++;
+			}
+			numAct++;
 		}
 	}
 }
