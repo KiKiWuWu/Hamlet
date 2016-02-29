@@ -7,4 +7,7 @@
 <fullyQualifiedTypeName name="java.sql.Array"/>
 <fullyQualifiedTypeName name="tweeter.Tweeter"/>
 <fullyQualifiedTypeName name="java.util.regex.Pattern"/>
+<fullyQualifiedTypeName name="java.io.FileWriter"/>
+<fullyQualifiedTypeName name="java.io.BufferedWriter"/>
+<fullyQualifiedTypeName name="java.io.FileReader"/>
 </qualifiedTypeNameHistroy>
