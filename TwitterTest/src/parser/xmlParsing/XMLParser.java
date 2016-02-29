@@ -85,6 +85,7 @@ public class XMLParser {
 				for(Tweet t : tl){
 					controller.insertLine(t);
 				}
+				tl.clear();
 				numScene++;
 			}
 			numAct++;

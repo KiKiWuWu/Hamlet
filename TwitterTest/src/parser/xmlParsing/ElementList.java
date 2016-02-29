@@ -43,7 +43,7 @@ public class ElementList {
 		if (tag.equals(TAG_SPEECH)) {
 			return currentElement.getAttributeValue(ATTR_WHO);
 		} 
-		else if(tag.equals(TAG_STAGE)){
+		else if(tag.equals(TAG_STAGE) ){
 			return "Regie";
 		}
 		else{
@@ -58,6 +58,9 @@ public class ElementList {
 	 */
 	private void addTweet(String speaker, String line) {
 		if (line.equals("") == false) {
+			if(speaker == null){
+				speaker = "Regie";
+			}
 			currentTweets.add(new Tweet(speaker, line, null));
 		}
 	}
