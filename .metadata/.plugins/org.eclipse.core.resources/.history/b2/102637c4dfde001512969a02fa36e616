@@ -45,7 +45,7 @@ public class TwitterDatabaseController {
 		
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(PATH));
-			bw.write(Integer.toString(last_tweet));
+			bw.write(last_tweet);
 			bw.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

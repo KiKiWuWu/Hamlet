@@ -139,7 +139,7 @@ public class DatabaseConnection {
 					     }	     		     
 					    
 					    try {
-							Thread.sleep(1000*10); 
+							Thread.sleep(1000*62);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -167,49 +167,32 @@ public class DatabaseConnection {
 	
 	
 
-		public int getAllTweets(int last_tweet){
+		public void getAllTweets(){
 			
 			String query = "SELECT " + TWEET_PID + ", "+ TWEET_ID + ", " + TWEET_TYPE + ", " + TWEET_TEXT + " FROM "+ TABLE_TWEET;
 			try {
 				PreparedStatement statementID = connection.prepareStatement(query);
 				ResultSet res = statementID.executeQuery();
 				
-				Integer row_id;
-				
-				res.next();
-				
-				int current = res.getInt(TWEET_ID);
-				
-				while(current < last_tweet){
-					res.next();
-					current = res.getInt(TWEET_ID);
-				}
-				
-				
 				 do 
-			      {	
+			      {
 			        String person_id = res.getString(TWEET_PID);
 			        String text = res.getString(TWEET_TEXT);
 			        String type = res.getString(TWEET_TYPE);
-			        row_id = res.getInt(TWEET_ID);
+			        Integer row_id = res.getInt(TWEET_ID);
 
 			        getKeys(person_id, text, type, row_id); 			               
-			      }while(res.next() && !notSzeneTweet(res.getString(TWEET_TEXT)));
-				 
-				 
-				 return row_id;
+			      }while(res.next() && notSzeneTweet(res.getString(TWEET_TEXT)));
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return -1;
 			}
-			
 		}
 		
 		private boolean notSzeneTweet(String text) {
 			// TODO Auto-generated method stub
-			System.out.println("Wert ist: "+Pattern.matches("Act \\d Scene \\d", text));
+			
 				
 			return Pattern.matches("Act \\d Scene \\d", text);
 		}

@@ -173,9 +173,6 @@ public class DatabaseConnection {
 			try {
 				PreparedStatement statementID = connection.prepareStatement(query);
 				ResultSet res = statementID.executeQuery();
-				
-				Integer row_id;
-				
 				res.next();
 				
 				int current = res.getInt(TWEET_ID);
@@ -191,13 +188,13 @@ public class DatabaseConnection {
 			        String person_id = res.getString(TWEET_PID);
 			        String text = res.getString(TWEET_TEXT);
 			        String type = res.getString(TWEET_TYPE);
-			        row_id = res.getInt(TWEET_ID);
+			        Integer row_id = res.getInt(TWEET_ID);
 
 			        getKeys(person_id, text, type, row_id); 			               
 			      }while(res.next() && !notSzeneTweet(res.getString(TWEET_TEXT)));
 				 
 				 
-				 return row_id;
+				 return res.getInt(TWEET_ID);
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

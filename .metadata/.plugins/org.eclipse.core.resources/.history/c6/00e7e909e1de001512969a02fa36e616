@@ -174,7 +174,7 @@ public class DatabaseConnection {
 				PreparedStatement statementID = connection.prepareStatement(query);
 				ResultSet res = statementID.executeQuery();
 				
-				Integer row_id;
+				Integer row_id,
 				
 				res.next();
 				
