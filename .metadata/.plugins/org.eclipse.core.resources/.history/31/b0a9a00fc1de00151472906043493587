@@ -111,7 +111,7 @@ public class DatabaseConnection {
 		}
 
 			
-		private void getKeys(String person_id, String text, String type, Integer row_id){
+		private void getKeys(String person_id, String text, String type, Integer row_id) throws InterruptedException{
 			System.out.println("_______________________");
 
 			String key_1 = null, key_2 = null, key_3 = null, key_4 = null;
@@ -137,12 +137,8 @@ public class DatabaseConnection {
 					    	 ref_id = null; 
 					     }	     		     
 					    
-					    try {
-							Thread.sleep(1000*62);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} //62 seks
+					     
+					    Thread.sleep(1000*62); //62 seks buffer considering api restrictions
 					    
 					    Tweeter tweeter = new Tweeter(key_1, key_2, key_3, key_4, text, type, row_id, ref_id);
 					    Long tweet_id = tweeter.tweet(); //diese Methode gibt die TwitterID des Tweets als Long zurück
