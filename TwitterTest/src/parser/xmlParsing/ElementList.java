@@ -25,7 +25,6 @@ public class ElementList {
 
 	private LinkedList<Tweet> currentTweets;
 	private Element head;
-	private int ct = 0;
 
 	public ElementList(Element head) {
 		this.head = head;
@@ -61,7 +60,11 @@ public class ElementList {
 			if(speaker == null){
 				speaker = "Regie";
 			}
-			currentTweets.add(new Tweet(speaker, line, null));
+			String[] speakers = speaker.split(" ");
+			for(String s : speakers){
+				currentTweets.add(new Tweet(s, line, null));
+			}
+
 		}
 	}
 
