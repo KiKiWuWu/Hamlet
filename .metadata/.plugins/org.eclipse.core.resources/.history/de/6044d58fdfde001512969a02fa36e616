@@ -41,11 +41,10 @@ public class TwitterDatabaseController {
 		System.out.println("LAST TWEET id: "+last_tweet);
 		
 		last_tweet = dc.getAllTweets(last_tweet);
-		System.out.println(last_tweet);
 		
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(PATH));
-			bw.write(Integer.toString(last_tweet));
+			bw.write(last_tweet);
 			bw.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
