@@ -1,9 +1,0 @@
-package tweeter;
-
-public class DatabaseConnectionController {
-
-	public DatabaseConnectionController() {
-		// TODO Auto-generated constructor stub
-	}
-
-}
