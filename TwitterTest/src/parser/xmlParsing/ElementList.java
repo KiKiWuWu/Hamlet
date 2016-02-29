@@ -1,90 +1,115 @@
 package parser.xmlParsing;
 
-import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.jdom2.Element;
 
 /**
- * This class is designed to hold a list of {@link Element}, iterate over it and extract the data relevant for the database.
- * For getting the correct sequence of lines across different instances of this class over the same data, 
- * the method {@code getCurrentLineNumber} should be used.
+ * This class is designed to hold an {@link Element} representing the head of a tree and
+ * extracts the data relevant for the database. 
  * @author rom54494
  *
  */
 public class ElementList {
 
-	private List<Element> list;
-	private Iterator<Element> iter;
-	private Element currentElement;
-	private int currentLine;
-	private String currentSpeaker;
-	
-	public ElementList(List<Element> list){
-		this.list = list;
-		currentLine = Integer.MAX_VALUE;
-		iter = this.list.iterator();
+	private final String TAG_SPEECH = "sp";
+	private final String TAG_STAGE = "stage";
+	private final String TAG_HEAD = "head";
+	private final String TAG_SPEAKER = "speaker";
+	private final String TAG_WORD = "w";
+	private final String TAG_CHAR = "c";
+	private final String TAG_PUNC = "pc";
+	private final String TAG_LB = "lb";
+	private final String ATTR_WHO = "who";
+
+	private LinkedList<Tweet> currentTweets;
+	private Element head;
+	private int ct = 0;
+
+	public ElementList(Element head) {
+		this.head = head;
+		currentTweets = new LinkedList<Tweet>();
 	}
-	
+
 	/**
-	 * Takes a look at {@code currentElement} and reads the number of the current line from it
-	 * @return the new line number
+	 * After going to the next line, the speaker has to be updated if possible
+	 * (not for stage-directions etc.)<br>
+	 * Will set {@code currentSpeaker} to {@code null} if no speaker can be
+	 * found.
 	 */
-	private int updateLineNumber(){
-		return 0;
-	}
-	
-	private void updateSpeaker(){
-		
-	}
-	
-	/**
-	 * Looks at {@code currentElement} and parses the drama-text from it
-	 * @return A String with the text of the drama, corresponding to the current element
-	 */
-	public String getCurrentLineText(){
-		return null;
-	}
-	
-	/**
-	 * @return the number of the line in the current element. Returns Integer.MAX_VALUE if no line is specified (head-tag!!)
-	 */
-	public int getCurrentLineNumber(){
-		return currentLine;
-	}
-	
-	public String getCurrentSpeaker(){
-		return currentSpeaker;
-	}
-	
-	/**
-	 * Tells the class to update the current element
-	 * @return true, if the element has been updated successfully
-	 * <br> false, if there were no more elements in the list and no update was possible
-	 */
-	public boolean setNext(){
-		if(iter.hasNext()){
-			currentElement = iter.next();
-			currentLine = updateLineNumber();
-			updateSpeaker();
-			return true;
+	private String updateSpeaker(Element currentElement) {
+		String tag = currentElement.getName();
+		if (tag.equals(TAG_SPEECH)) {
+			return currentElement.getAttributeValue(ATTR_WHO);
+		} 
+		else if(tag.equals(TAG_STAGE)){
+			return "Regie";
 		}
 		else{
-			return false;
+			return "";
 		}
 	}
-	
+
 	/**
-	 * Checks the list (via the iterator) if any more {@link Elements} are left
-	 * @return true if the are more Elements to work with
-	 * <br> false if at the end of the list
+	 * Creates a {@link Tweet} and adds it to {@code currentTweets}
+	 * @param speaker Who has said the line
+	 * @param line What was said. If "", no tweet will be added
 	 */
-	public boolean hasNext(){
-		if(iter.hasNext()){
-			return true;
+	private void addTweet(String speaker, String line) {
+		if (line.equals("") == false) {
+			currentTweets.add(new Tweet(speaker, line, null));
 		}
-		else{
-			return false;
+	}
+
+	/**
+	 * Recursively goes through the XML and creates {@link Tweet}s when necessary
+	 * @param head {@link Element} to start parsing from
+	 * @param speaker the speaker in the parent Element, may be changed or kept for the Tweet
+	 */
+	private void parseTree(Element head, String speaker) {
+		String line = "";
+		//updates speaker only when needed
+		String tmp = updateSpeaker(head);
+		if(tmp != ""){
+			speaker = tmp;
 		}
+		LinkedList<Element> children = new LinkedList<Element>(head.getChildren());
+		if (children.size() == 0) {//no child-nodes
+			return;
+		}
+		for (Element child : children) {
+			//tag-name of current child
+			String tag = child.getName();
+			switch (tag) {
+			case TAG_HEAD:
+			case TAG_SPEAKER:
+				break;//those tags needed to be excluded manually
+			case TAG_CHAR:
+			case TAG_WORD:
+			case TAG_PUNC:
+				line += child.getText();
+				break;
+			case TAG_LB://when a character speaks more than one line
+				addTweet(speaker, line);
+				line = "";
+				break;
+			default://adds Tweet with current line and performs recursive call with current child
+				addTweet(speaker, line);
+				line = "";
+				parseTree(child, speaker);
+				break;
+			}
+		}
+		addTweet(speaker, line);//End of text, but no linebreak
+	}
+
+	/**
+	 * Parses the tree starting with {@code head}
+	 * @return All {@link Tweet}s that could be parsed
+	 */
+	public List<Tweet> getTweets() {
+		parseTree(head, null);
+		return currentTweets;
 	}
 }
