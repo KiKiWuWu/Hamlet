@@ -63,5 +63,9 @@ public class Tweet {
 	@Override
 	public String toString(){
 		return speaker + ": " + text;
+		/*if(speaker != null){
+			return speaker.trim();
+		}
+		else{return text;}*/
 	}
 }

@@ -21,8 +21,8 @@ public class DatabaseController implements DBCInterface{
 	 * Initializes all modules or sub-controllers for the whole program here
 	 */
 	public DatabaseController(){
-		/*db = new Database();
-		pp = new PersonParser(this);*/
+		db = new Database();
+		pp = new PersonParser(this);
 		xmlParser = new XMLParser(this, PATH_HAMLET);
 	}
 	
@@ -51,11 +51,11 @@ public class DatabaseController implements DBCInterface{
 	 * After this process, the database should be ready to be used directly for posting the contents on Twitter
 	 */
 	public void run(){
-		/*System.out.println("Clearing database");
+		System.out.println("Clearing database");
 		db.clearDatabase();
 		System.out.println("Inserting people");
-		pp.parse(PATH_PEOPLE);
-		System.out.println("Done inserting");*/
+		//pp.parse(PATH_PEOPLE);
+		System.out.println("Done inserting");
 		System.out.println("Starting to parse XML");
 		xmlParser.run();
 		System.out.println("Done parsing XML into database");

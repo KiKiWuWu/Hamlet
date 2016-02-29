@@ -114,7 +114,7 @@ public class Database {
 			statement.execute("SET FOREIGN_KEY_CHECKS = 0");
 			statement.execute("TRUNCATE TABLE " + TABLE_TWEET);
 			statement.execute("TRUNCATE TABLE " + TABLE_PERSON);
-			statement.execute("SET FOREIGN_KEY_CHECKS = 1");
+			//statement.execute("SET FOREIGN_KEY_CHECKS = 1");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
