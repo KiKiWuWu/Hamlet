@@ -1,0 +1,19 @@
+
+public class Main {
+
+	public Main() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void main(String[] args) throws InterruptedException {
+		
+		
+		System.out.println("Start");
+		Thread.sleep(10000);
+		
+		System.out.println("Stopp");
+		// TODO Auto-generated method stub
+
+	}
+
+}
