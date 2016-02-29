@@ -137,6 +137,13 @@ public class DatabaseConnection {
 					    	 ref_id = null; 
 					     }	     		     
 					    
+					    try {
+							Thread.sleep(1000*62);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} //62 seks
+					    
 					    Tweeter tweeter = new Tweeter(key_1, key_2, key_3, key_4, text, type, row_id, ref_id);
 					    Long tweet_id = tweeter.tweet(); //diese Methode gibt die TwitterID des Tweets als Long zurück
 				    
