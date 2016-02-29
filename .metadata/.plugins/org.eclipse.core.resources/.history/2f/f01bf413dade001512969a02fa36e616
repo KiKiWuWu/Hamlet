@@ -144,7 +144,7 @@ public class DatabaseConnection {
 							e.printStackTrace();
 						} //62 seks
 					    
-					    TweeterClass tweeter = new TweeterClass(key_1, key_2, key_3, key_4, text, type, row_id, ref_id);
+					    Tweeter tweeter = new Tweeter(key_1, key_2, key_3, key_4, text, type, row_id, ref_id);
 					    
 					    Long tweet_id = tweeter.tweet(); //diese Methode gibt die TwitterID des Tweets als Long zurück
 				    
