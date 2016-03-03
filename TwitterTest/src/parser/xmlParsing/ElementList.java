@@ -22,12 +22,17 @@ public class ElementList {
 	private final String TAG_PUNC = "pc";
 	private final String TAG_LB = "lb";
 	private final String ATTR_WHO = "who";
+	private final String DELIMITER = " ";
 
 	private LinkedList<Tweet> currentTweets;
 	private Element head;
+	private StringConverter nameInserter;
+	private StringConverter hashTagInserter;
 
 	public ElementList(Element head) {
 		this.head = head;
+		this.nameInserter = new StringConverter(null, null);
+		this.hashTagInserter = new StringConverter(null, null);
 		currentTweets = new LinkedList<Tweet>();
 	}
 
@@ -62,6 +67,8 @@ public class ElementList {
 			}
 			String[] speakers = speaker.split(" ");
 			for(String s : speakers){
+				s = nameInserter.convertString(s, DELIMITER).toString();
+				s = hashTagInserter.convertString(s, DELIMITER).toString();
 				currentTweets.add(new Tweet(s, line, null));
 			}
 
