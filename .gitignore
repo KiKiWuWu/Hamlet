@@ -6,3 +6,6 @@ TwitterTest/res/*
 
 TwitterTest/.metadata
 
+.metadata/
+.recommenders/
+Test\ Sleep/

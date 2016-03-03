@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename type &apos;tweeter.Tweeter&apos; to &apos;TweeterClass&apos;&#x0A;- Original project: &apos;TwitterTest&apos;&#x0A;- Original element: &apos;tweeter.Tweeter&apos;&#x0A;- Renamed element: &apos;tweeter.TweeterClass&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Tweeter&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;tweeter{Tweeter.java[Tweeter" matchStrategy="1" name="TweeterClass" qualified="false" references="true" similarDeclarations="false" stamp="1456746392751" textual="false" version="1.0"/>
-</session>
