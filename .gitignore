@@ -1,6 +1,7 @@
 *.class
 TwitterTest/.classpath
 TwitterTest/.project
+TwitterTest/jars/*
 
 TwitterTest/res/*
 
