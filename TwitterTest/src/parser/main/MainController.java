@@ -1,10 +1,11 @@
 package parser.main;
 
+import parser.database.DBCInterface;
 import parser.database.DatabaseController;
 
 public class MainController {
 	
-	private DatabaseController db;
+	private DBCInterface db;
 	
 	private void initControllers(){
 		db = new DatabaseController();	

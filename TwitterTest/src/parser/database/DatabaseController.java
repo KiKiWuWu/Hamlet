@@ -1,17 +1,18 @@
 package parser.database;
 
 import parser.xmlParsing.XMLParser;
-import parser.xmlParsing.Tweet;
+
+import java.util.Map;
 
 public class DatabaseController implements DBCInterface{
 	
 	/** Path to the CSV-File containing the necessary information about the characters */
-	private final String PATH_PEOPLE = "res/accounts.csv";
+	private final String PATH_PEOPLE = "res/accounts_test.csv";
 	/** Path to the XML containing the play itself */
 	private final String PATH_HAMLET = "res/folger/Ham.xml";
 	
 	/** Database in which tweets and people are stored */
-	private Database db;
+	private FolgersDatabase db;
 	/** Module which parses the CSV containg the people of the play */
 	private PersonParser pp;
 	/** Module parsing the play itself */
@@ -21,25 +22,30 @@ public class DatabaseController implements DBCInterface{
 	 * Initializes all modules or sub-controllers for the whole program here
 	 */
 	public DatabaseController(){
-		db = new Database();
+		db = new FolgersSQLDatabase();
 		pp = new PersonParser(this);
 		xmlParser = new XMLParser(this, PATH_HAMLET);
 	}
 	
 	@Override
-	public void insertPerson(String name, String[] keys){
-		if(db.insertIntoPerson(name, keys) == false){
-			System.err.println("NOT ABLE TO INSERT " + name);
+	public void insertPerson(Person person){
+		if(db.insertIntoPerson(person) == false){
+			System.err.println("NOT ABLE TO INSERT " + person.getName());
 		}
 	}
 	
 	@Override
 	public void insertLine(Tweet tweet){
-		/*if(db.insertTweet(tweet) == false){
+		if(db.insertTweet(tweet) == false){
 			System.err.println("NOT ABLE TO INSERT LINE " + tweet);
-		}*/
-		System.out.println(tweet.toString());
+		}
 	}
+	
+	@Override
+	public Map<CharSequence, CharSequence> getReplacableCharacters() {
+		return db.getReplacableNames();
+	}
+	 
 	
 	/**
 	 * Starts the program proper. These steps will be taken in this exact order <br>
@@ -54,7 +60,7 @@ public class DatabaseController implements DBCInterface{
 		System.out.println("Clearing database");
 		db.clearDatabase();
 		System.out.println("Inserting people");
-		//pp.parse(PATH_PEOPLE);
+		pp.parse(PATH_PEOPLE);
 		System.out.println("Done inserting");
 		System.out.println("Starting to parse XML");
 		xmlParser.run();
