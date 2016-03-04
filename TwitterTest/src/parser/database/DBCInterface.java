@@ -1,6 +1,6 @@
 package parser.database;
 
-import parser.xmlParsing.Tweet;
+import java.util.Map;
 
 /**
  * This interface is responsible to write entries, person-names and {@link Tweet}s into the corresponding database
@@ -13,10 +13,22 @@ public interface DBCInterface {
 	 * @param name Name of the person to be added
 	 * @param keys Twitter-API-Keys of the corresponding account
 	 */
-	void insertPerson(String name, String[] keys);
+	public void insertPerson(Person person);
 	/**
-	 * Inserts an instance of {@link parser.xmalParsing.Tweet} into the database
+	 * Inserts an instance of {@link parser.database.xmalParsing.Tweet} into the database
 	 * @param tweet The tweet to be added
 	 */
-	void insertLine(Tweet tweet);
+	public void insertLine(Tweet tweet);
+	
+	/**
+	 * @return all characters of the play whose names can be substituted by their Twitter-ids
+	 */
+	public Map<CharSequence, CharSequence> getReplacableCharacters();
+	
+	/**
+	 * Starts the execution of the program. Building database, parsing play etc.
+	 */
+	public void run();
+	
+	
 }

@@ -1,4 +1,4 @@
-package parser.xmlParsing;
+package parser.database;
 
 /**
  * Class containing all necessary informations for the tweet to be posted on Twitter

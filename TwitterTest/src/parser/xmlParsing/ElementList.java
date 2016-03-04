@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.jdom2.Element;
 
+import parser.database.DBCInterface;
+import parser.database.Tweet;
+
 /**
  * This class is designed to hold an {@link Element} representing the head of a tree and
  * extracts the data relevant for the database. 
@@ -22,17 +25,25 @@ public class ElementList {
 	private final String TAG_PUNC = "pc";
 	private final String TAG_LB = "lb";
 	private final String ATTR_WHO = "who";
+	
 	private final String DELIMITER = " ";
 
+	private XMLParser parser;
 	private LinkedList<Tweet> currentTweets;
 	private Element head;
 	private StringConverter nameInserter;
-	private StringConverter hashTagInserter;
 
-	public ElementList(Element head) {
+	/**
+	 * 
+	 * @param head
+	 * @param parser may be null but no replacement will be done
+	 */
+	public ElementList(Element head, XMLParser parser) {
 		this.head = head;
-		this.nameInserter = new StringConverter(null, null);
-		this.hashTagInserter = new StringConverter(null, null);
+		this.parser = parser;
+		if(this.parser != null){
+			nameInserter = new StringConverter(this.parser.getMapping());
+		}
 		currentTweets = new LinkedList<Tweet>();
 	}
 
@@ -62,16 +73,16 @@ public class ElementList {
 	 */
 	private void addTweet(String speaker, String line) {
 		if (line.equals("") == false) {
-			if(speaker == null){
+			if(nameInserter != null){
+				line = nameInserter.convertString(line, DELIMITER).toString();
+			}
+			if(speaker == null){//used to catch unparsable speaker, happens one time in Hamlet
 				speaker = "Regie";
 			}
 			String[] speakers = speaker.split(" ");
 			for(String s : speakers){
-				s = nameInserter.convertString(s, DELIMITER).toString();
-				s = hashTagInserter.convertString(s, DELIMITER).toString();
 				currentTweets.add(new Tweet(s, line, null));
 			}
-
 		}
 	}
 

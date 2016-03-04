@@ -2,6 +2,7 @@ package parser.xmlParsing;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -10,6 +11,7 @@ import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
 
 import parser.database.DBCInterface;
+import parser.database.Tweet;
 import parser.xmlParsing.ElementList;
 
 /**
@@ -50,6 +52,10 @@ public class XMLParser {
 		acts = new ArrayList<Element>(body.getChildren("div1", ns));
 	}
 	
+	public Map<CharSequence, CharSequence> getMapping(){
+		return controller.getReplacableCharacters();
+	}
+	
 	/**
 	 * Fills {@code scenes} for the current act
 	 * @param act The current act from which the scenes shall be extraced
@@ -79,8 +85,10 @@ public class XMLParser {
 			int numScene = 0;
 			initScenes(act);
 			for(Element scene : scenes){
+				//if(numScene == 1){return;}
+				if(numScene == 1){System.out.println("Parsing act " + numAct);}
 				tl.add(constructInitialSceneTweet(numAct+1, numScene+1));;
-				ElementList elist = new ElementList(scene); 
+				ElementList elist = new ElementList(scene, this); 
 				tl.addAll(elist.getTweets());
 				for(Tweet t : tl){
 					controller.insertLine(t);

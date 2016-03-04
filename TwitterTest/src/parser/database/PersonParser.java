@@ -20,22 +20,30 @@ public class PersonParser {
 	public void parse(final String path){
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(path));
-			StringTokenizer tokens;
+			Person person;
+			String[] tokens;
 			String line, name;
 			String[] keys = new String[4];
 			//skips header
 			br.readLine();
 			line = br.readLine();
 			while(line != null){
+				person = new Person();
 				//splits the line of the csv into tokens and then add the line to the database
-				tokens = new StringTokenizer(line, ",");
-				name = tokens.nextToken().trim();
-				for(int i = 0; i < keys.length; i++){
-					if(tokens.hasMoreTokens()){
-						keys[i] = tokens.nextToken();
-					}
+				tokens = line.split(",");
+				if(tokens.length != 9){
+					System.err.println(line + " could not be split into 9 tokens with delimitr ','");
 				}
-				controller.insertPerson(name, keys);
+				person.setName(tokens[0]);
+				person.setFolger_id(tokens[1]);
+				for(int i = 2; i < 6; i++){
+					keys[i-2] = tokens[i];
+				}
+				person.setKeys(keys);
+				person.setReplacable(Integer.parseInt(tokens[6]));
+				person.setTwitter_id(tokens[7]);
+				person.setSonstiges(tokens[8]);
+				controller.insertPerson(person);
 				line = br.readLine();
 			}			
 			br.close();
