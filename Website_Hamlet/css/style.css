@@ -27,6 +27,32 @@
 /*   21 - Footer		 	  	   */
 /*   22 - Scroll to Top	 	  	   */
 /*   23 - Contact Form Response    */
+#myCarousel{
+	background-color: #88DDE8;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.item{
+	margin-bottom: 30px;
+	margin-top: 30px;
+}
+
+.carousel-indicators{
+	margin-top: 20px;
+	bottom: none;
+}
+
+.profil_image {
+	width: 50px;
+	height: 50px;
+}
+
+#left_control, #right_control {
+	background: none;
+}
 
 
 i {
