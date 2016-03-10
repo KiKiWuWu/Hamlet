@@ -85,7 +85,7 @@ public class XMLParser {
 			int numScene = 0;
 			initScenes(act);
 			for(Element scene : scenes){
-				//if(numScene == 1){return;}
+				if(numScene == 1){return;}
 				if(numScene == 1){System.out.println("Parsing act " + numAct);}
 				tl.add(constructInitialSceneTweet(numAct+1, numScene+1));;
 				ElementList elist = new ElementList(scene, this); 

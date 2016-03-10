@@ -7,7 +7,7 @@ import java.util.Map;
 public class DatabaseController implements DBCInterface{
 	
 	/** Path to the CSV-File containing the necessary information about the characters */
-	private final String PATH_PEOPLE = "res/accounts_test.csv";
+	private final String PATH_PEOPLE = "res/accounts.csv";
 	/** Path to the XML containing the play itself */
 	private final String PATH_HAMLET = "res/folger/Ham.xml";
 	

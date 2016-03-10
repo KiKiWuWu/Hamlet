@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.4.3
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Erstellungszeit: 04. Mrz 2016 um 16:10
--- Server-Version: 10.1.8-MariaDB
--- PHP-Version: 5.6.14
+-- Host: localhost
+-- Erstellungszeit: 10. Mrz 2016 um 10:47
+-- Server-Version: 5.6.24
+-- PHP-Version: 5.6.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Datenbank: `hamlet`
@@ -26,14 +26,14 @@ SET time_zone = "+00:00";
 -- Tabellenstruktur für Tabelle `person`
 --
 
-CREATE TABLE `person` (
+CREATE TABLE IF NOT EXISTS `person` (
   `id` int(2) NOT NULL,
   `name` varchar(50) COLLATE latin1_german1_ci NOT NULL,
   `folger_id` varchar(50) COLLATE latin1_german1_ci NOT NULL,
-  `key_1` varchar(50) COLLATE latin1_german1_ci NOT NULL,
-  `key_2` varchar(50) COLLATE latin1_german1_ci NOT NULL,
-  `key_3` varchar(50) COLLATE latin1_german1_ci NOT NULL,
-  `key_4` varchar(50) COLLATE latin1_german1_ci NOT NULL,
+  `consumer_key` varchar(50) COLLATE latin1_german1_ci NOT NULL,
+  `consumer_secret` varchar(50) COLLATE latin1_german1_ci NOT NULL,
+  `access_token` varchar(50) COLLATE latin1_german1_ci NOT NULL,
+  `access_token_secret` varchar(50) COLLATE latin1_german1_ci NOT NULL,
   `replacable` tinyint(1) NOT NULL,
   `twitter_id` varchar(20) COLLATE latin1_german1_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;
@@ -44,9 +44,9 @@ CREATE TABLE `person` (
 -- Tabellenstruktur für Tabelle `tweets`
 --
 
-CREATE TABLE `tweets` (
+CREATE TABLE IF NOT EXISTS `tweets` (
   `id` int(5) NOT NULL,
-  `person_id` int(2) NOT NULL,
+  `person_id` varchar(50) COLLATE latin1_german1_ci NOT NULL,
   `text` varchar(150) COLLATE latin1_german1_ci NOT NULL,
   `type` varchar(20) COLLATE latin1_german1_ci NOT NULL DEFAULT 'response',
   `reference_tweet` varchar(20) COLLATE latin1_german1_ci DEFAULT NULL,
@@ -86,16 +86,6 @@ ALTER TABLE `person`
 --
 ALTER TABLE `tweets`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
---
--- Constraints der exportierten Tabellen
---
-
---
--- Constraints der Tabelle `tweets`
---
-ALTER TABLE `tweets`
-  ADD CONSTRAINT `tweets_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`);
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.jdom2.Element;
 
-import parser.database.DBCInterface;
 import parser.database.Tweet;
 
 /**
@@ -81,7 +80,7 @@ public class ElementList {
 			}
 			String[] speakers = speaker.split(" ");
 			for(String s : speakers){
-				currentTweets.add(new Tweet(s, line, null));
+				currentTweets.add(new Tweet(s.trim(), line, null));
 			}
 		}
 	}
