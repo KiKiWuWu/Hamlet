@@ -95,6 +95,7 @@ public class ElementList {
 			}
 			String[] speakers = speaker.split(" ");
 			for(String s : speakers){
+				s = s.replace("#", "");
 				currentTweets.add(new Tweet(s.trim(), line, null));
 			}
 		}
