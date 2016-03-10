@@ -30,10 +30,10 @@ CREATE TABLE IF NOT EXISTS `person` (
   `id` int(2) NOT NULL,
   `name` varchar(50) COLLATE latin1_german1_ci NOT NULL,
   `folger_id` varchar(50) COLLATE latin1_german1_ci NOT NULL,
-  `consumer_key` varchar(50) COLLATE latin1_german1_ci NOT NULL,
-  `consumer_secret` varchar(50) COLLATE latin1_german1_ci NOT NULL,
-  `access_token` varchar(50) COLLATE latin1_german1_ci NOT NULL,
-  `access_token_secret` varchar(50) COLLATE latin1_german1_ci NOT NULL,
+  `consumer_key` varchar(100) COLLATE latin1_german1_ci NOT NULL,
+  `consumer_secret` varchar(100) COLLATE latin1_german1_ci NOT NULL,
+  `access_token` varchar(100) COLLATE latin1_german1_ci NOT NULL,
+  `access_token_secret` varchar(100) COLLATE latin1_german1_ci NOT NULL,
   `replacable` tinyint(1) NOT NULL,
   `twitter_id` varchar(20) COLLATE latin1_german1_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;

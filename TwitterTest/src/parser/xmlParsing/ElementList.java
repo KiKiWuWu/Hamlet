@@ -15,21 +15,36 @@ import parser.database.Tweet;
  */
 public class ElementList {
 
+	//XML-Tags
+	/** Tag which indicates a character speaking */
 	private final String TAG_SPEECH = "sp";
+	/** Tag which indicates a stage-directio */
 	private final String TAG_STAGE = "stage";
+	/** header for a few elements, needs to be excluded */
 	private final String TAG_HEAD = "head";
+	/** Tag which indicates the spekaer of the line */
 	private final String TAG_SPEAKER = "speaker";
+	/** Tag containing a word */
 	private final String TAG_WORD = "w";
+	/** Tag containing a (whitespace-)character */
 	private final String TAG_CHAR = "c";
+	/** Tag containing a punctuation mark */
 	private final String TAG_PUNC = "pc";
+	/** Tag indicating a linebreak */
 	private final String TAG_LB = "lb";
+	/** Attribute containing the speaker */
 	private final String ATTR_WHO = "who";
 	
+	/** Character by which the words of a line are seperated */
 	private final String DELIMITER = " ";
 
+	/** Resonsible for parsing the tweets */
 	private XMLParser parser;
+	/** List containing all parsed tweets */
 	private LinkedList<Tweet> currentTweets;
+	/** Head-elemnt of the parse-tree */
 	private Element head;
+	/** Responsible for replacing names with Twitter-names */
 	private StringConverter nameInserter;
 
 	/**

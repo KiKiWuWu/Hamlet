@@ -12,6 +12,10 @@ public class StringConverter {
 	/** Set containing all keys for conveniences sake */
 	private Set<String> keys;
 	
+	/**
+	 * 
+	 * @param converter Map containing values which shall be replaced as keys and the replacement as value
+	 */
 	public StringConverter(Map<CharSequence, CharSequence> converter){
 		this.converter = converter;
 		keys = new HashSet<String>();
@@ -48,12 +52,12 @@ public class StringConverter {
 		for(int i = 0; i < lines.length; i++){
 			token = lines[i].replaceAll("[^a-zA-Z ]", "");;
 			for(String key : keys){
-				if(token.startsWith(key)){
+				if(token.contains(key)){
 					if(converter.get(key) == null){
 						System.err.println("Matched but no result in map for: " + key);
 					}
 					else{
-						lines[i] = lines[i].replace(token, converter.get(key));
+						lines[i] = lines[i].replace(key, converter.get(key));
 					}
 					break;
 				}
