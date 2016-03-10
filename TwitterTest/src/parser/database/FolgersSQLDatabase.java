@@ -21,7 +21,6 @@ public class FolgersSQLDatabase implements FolgersDatabase{
 	private final String URL = "jdbc:mysql://localhost:3306/";
 	private final String USER_NAME = "root";
 	private final String PASSWORD = "root";
-	private final String DEFAULT = "DEFAULT";
 	
 	//TABLES
 	private final String TABLE_TWEET = "tweets";
@@ -169,7 +168,6 @@ public class FolgersSQLDatabase implements FolgersDatabase{
 			insertTweet.setString(3, tweet.getType());
 			insertTweet.execute();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return false;
 		}
 		return true;

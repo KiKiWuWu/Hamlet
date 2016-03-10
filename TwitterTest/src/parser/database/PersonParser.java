@@ -7,8 +7,12 @@ import java.util.StringTokenizer;
 
 public class PersonParser {
 
+	/** Controller responsible for adding entries into the database */
 	private DBCInterface controller;
 	
+	/**
+	 * @param controller Controller which can be used for callbacks
+	 */
 	public PersonParser(DBCInterface controller){
 		this.controller = controller;
 	}
