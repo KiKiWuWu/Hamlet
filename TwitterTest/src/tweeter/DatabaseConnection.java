@@ -31,10 +31,10 @@ public class DatabaseConnection {
 		
 		private final String PERSON_ID = "id";
 		private final String PERSON_NAME = "name";
-		private final String PERSON_KEY1 = "key_1";
-		private final String PERSON_KEY2 = "key_2";
-		private final String PERSON_KEY3 = "key_3";
-		private final String PERSON_KEY4 = "key_4";
+		private final String PERSON_KEY1 = "consumer_key";
+		private final String PERSON_KEY2 = "consumer_secret";
+		private final String PERSON_KEY3 = "access_token";
+		private final String PERSON_KEY4 = "access_token_secret";
 		
 		private Connection connection;
 		private Statement statement;

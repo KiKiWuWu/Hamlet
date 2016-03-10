@@ -18,8 +18,6 @@ public class Person {
 	private int replacable;
 	/** Twitter-id of the account of this person */
 	private String twitter_id;
-	/** potential inforamtion at the end of CSV, will probably get removed */
-	private String sonstiges;
 	
 	/**
 	 * @return the name
@@ -83,17 +81,5 @@ public class Person {
 	 */
 	public void setTwitter_id(String twitter_id) {
 		this.twitter_id = twitter_id;
-	}
-	/**
-	 * @return the sonstiges
-	 */
-	public String getSonstiges() {
-		return sonstiges;
-	}
-	/**
-	 * @param sonstiges the sonstiges to set
-	 */
-	public void setSonstiges(String sonstiges) {
-		this.sonstiges = sonstiges;
 	}
 }

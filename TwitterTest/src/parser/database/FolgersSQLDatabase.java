@@ -29,7 +29,7 @@ public class FolgersSQLDatabase implements FolgersDatabase{
 	
 	//COLUMNS
 	private final String TWEET_ID = "id";
-	private final String TWEET_PID = "folgers_id";
+	private final String TWEET_PID = "person_id";
 	private final String TWEET_TEXT = "text";
 	private final String TWEET_TYPE = "type";
 	private final String TWEET_REF_TWEET = "reference_tweet";
@@ -39,10 +39,10 @@ public class FolgersSQLDatabase implements FolgersDatabase{
 	private final String PERSON_ID = "id";
 	private final String PERSON_NAME = "name";
 	private final String PERSON_FOLGER_ID = "folger_id";
-	private final String PERSON_KEY1 = "key_1";
-	private final String PERSON_KEY2 = "key_2";
-	private final String PERSON_KEY3 = "key_3";
-	private final String PERSON_KEY4 = "key_4";
+	private final String PERSON_KEY1 = "consumer_key";
+	private final String PERSON_KEY2 = "consumer_secret";
+	private final String PERSON_KEY3 = "access_token";
+	private final String PERSON_KEY4 = "access_token_secret";
 	private final String PERSON_IS_REPLACABLE = "replacable";
 	private final String PERSON_TWITTER_ID = "twitter_id";
 	
@@ -124,7 +124,7 @@ public class FolgersSQLDatabase implements FolgersDatabase{
 			statement.execute("SET FOREIGN_KEY_CHECKS = 0");
 			statement.execute("TRUNCATE TABLE " + TABLE_TWEET);
 			statement.execute("TRUNCATE TABLE " + TABLE_PERSON);
-			//statement.execute("SET FOREIGN_KEY_CHECKS = 1");
+			statement.execute("SET FOREIGN_KEY_CHECKS = 1");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -169,6 +169,7 @@ public class FolgersSQLDatabase implements FolgersDatabase{
 			insertTweet.setString(3, tweet.getType());
 			insertTweet.execute();
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return false;
 		}
 		return true;
