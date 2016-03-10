@@ -92,9 +92,18 @@ i {
     bottom: 1px; // or however much you want to offset it by
 }
 
+.intro_buttons{
+	padding: 10px;
+
+}
+
 #twitter_icon {
-	background-image: url(../img/scroll_up.png);
-	margin-left: 10px;
+	max-width: 100%;
+    margin: 0px 0px 5px 10px;
+    
+
+    max-height: 25px;
+
 }
 
 #footer {
