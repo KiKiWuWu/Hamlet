@@ -29,7 +29,9 @@ public class DatabaseConnection {
 		private final String TWEET_TWEETID = "tweet_id";
 		private final String TWEET_REF_TWEET_ID = "ref_tweet_id";
 		
+
 		private final String PERSON_ID = "folger_id";
+
 		private final String PERSON_NAME = "name";
 		private final String PERSON_KEY1 = "consumer_key";
 		private final String PERSON_KEY2 = "consumer_secret";
@@ -118,9 +120,10 @@ public class DatabaseConnection {
 			String key_1 = null, key_2 = null, key_3 = null, key_4 = null;
 			Long ref_id = null;			
 			
+
 			String queryKeys = "SELECT * FROM "+ TABLE_PERSON + " WHERE " + PERSON_ID + " = '" + person_id + "'";
 		    PreparedStatement statementKeys;
-		    System.out.println("test: "+ queryKeys);
+		    
 		        
 				try {
 					statementKeys = connection.prepareStatement(queryKeys);
@@ -140,11 +143,13 @@ public class DatabaseConnection {
 					     }	     		     
 					    
 					    try {
+
 							Thread.sleep(1000*62); //62 secs
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} 
+
 					    
 					    TweeterClass tweeter = new TweeterClass(key_1, key_2, key_3, key_4, text, type, row_id, ref_id);
 					    
