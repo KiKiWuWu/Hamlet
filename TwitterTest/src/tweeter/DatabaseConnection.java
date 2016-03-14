@@ -214,10 +214,9 @@ public class DatabaseConnection {
 		}
 		
 		private boolean notSzeneTweet(String text) {
-			// TODO Auto-generated method stub
 			System.out.println("Wert ist: "+Pattern.matches("Act \\d Scene \\d", text));
 				
-			return Pattern.matches("Act \\d Scene \\d", text);
+			return Pattern.matches("Act \\d Scene 1", text);
 		}
 
 		public void saveIDofTweet(Long twitterID, Integer row_id) {

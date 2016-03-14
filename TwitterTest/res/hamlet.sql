@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `person` (
 CREATE TABLE IF NOT EXISTS `tweets` (
   `id` int(5) NOT NULL,
   `person_id` varchar(50) COLLATE latin1_german1_ci NOT NULL,
-  `text` varchar(150) COLLATE latin1_german1_ci NOT NULL,
+  `text` varchar(140) COLLATE latin1_german1_ci NOT NULL,
   `type` varchar(20) COLLATE latin1_german1_ci NOT NULL DEFAULT 'response',
   `reference_tweet` varchar(20) COLLATE latin1_german1_ci DEFAULT NULL,
   `tweet_id` bigint(20) DEFAULT NULL,
