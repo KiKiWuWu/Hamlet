@@ -32,6 +32,10 @@ public class ElementList {
 	private final String TAG_PUNC = "pc";
 	/** Tag indicating a linebreak */
 	private final String TAG_LB = "lb";
+	/** Tag indicating a quote */
+	private final String TAG_QUOTATION = "q";
+	/** Tag indicating a foreign word */
+	private final String TAG_FOREIGN = "foreign";
 	/** Attribute containing the speaker */
 	private final String ATTR_WHO = "who";
 	
@@ -127,6 +131,18 @@ public class ElementList {
 			case TAG_HEAD:
 			case TAG_SPEAKER:
 				break;//those tags needed to be excluded manually
+			case TAG_FOREIGN:
+			case TAG_QUOTATION:
+				for(Element gc : child.getChildren()){
+					if(gc.getName().equals(TAG_LB)){
+						addTweet(speaker, line);
+						line = "";
+					}
+					else if (gc.getName().equals(TAG_CHAR) || gc.getName().equals(TAG_WORD) || gc.getName().equals(TAG_PUNC)){
+						line += gc.getText();
+					}
+				}
+				break;
 			case TAG_CHAR:
 			case TAG_WORD:
 			case TAG_PUNC:
