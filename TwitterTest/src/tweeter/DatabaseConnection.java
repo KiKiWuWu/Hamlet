@@ -203,7 +203,7 @@ public class DatabaseConnection {
 			      }while(res.next() && !notSzeneTweet(res.getString(TWEET_TEXT)));
 				 
 				 
-				 return row_id;
+				 return row_id + 1;
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -214,7 +214,7 @@ public class DatabaseConnection {
 		}
 		
 		private boolean notSzeneTweet(String text) {
-			System.out.println("Wert ist: "+Pattern.matches("Act \\d Scene \\d", text));
+			System.out.println("Wert ist: "+Pattern.matches("Act \\d Scene 1", text));
 				
 			return Pattern.matches("Act \\d Scene 1", text);
 		}
