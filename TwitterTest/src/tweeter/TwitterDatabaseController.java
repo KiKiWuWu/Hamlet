@@ -18,7 +18,7 @@ public class TwitterDatabaseController {
 	private int last_tweet;
 	
 	private void initDatabaseConnectionControllers(){
-		dc = new DatabaseConnection();	
+		dc = new DatabaseConnection(this);	
 	}
 	
 	private int getLastTweet(){
@@ -28,10 +28,18 @@ public class TwitterDatabaseController {
 				br.close();
 				return result;
 			} catch (NumberFormatException | IOException e ) {
-				// TODO Auto-generated catch block
 				return 1;
-			}
-		
+			}		
+	}
+	
+	public void saveLastTweet(int tid){
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter(PATH));
+			bw.write(Integer.toString(last_tweet));
+			bw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 		
 	private void runHamletTweets(){ 
@@ -42,15 +50,7 @@ public class TwitterDatabaseController {
 		
 		last_tweet = dc.getAllTweets(last_tweet);
 		System.out.println(last_tweet);
-		
-		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter(PATH));
-			bw.write(Integer.toString(last_tweet));
-			bw.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		saveLastTweet(last_tweet);
 	
 		System.out.println("end");	
 		 
@@ -60,7 +60,4 @@ public class TwitterDatabaseController {
 		initDatabaseConnectionControllers();
 		runHamletTweets(); 
 	}
-	
-	
-
 }

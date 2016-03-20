@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.regex.Pattern;
 
+import twitter4j.TwitterException;
+
 public class DatabaseConnection {
 
 	//general stuff
@@ -38,6 +40,7 @@ public class DatabaseConnection {
 		private final String PERSON_KEY3 = "access_token";
 		private final String PERSON_KEY4 = "access_token_secret";
 		
+		private TwitterDatabaseController controller;
 		private Connection connection;
 		private Statement statement;
 		private ResultSet results;
@@ -48,7 +51,8 @@ public class DatabaseConnection {
 		private PreparedStatement updateTweetID;
 		private PreparedStatement updateReferenceTweetID;
 
-		public DatabaseConnection(){
+		public DatabaseConnection(TwitterDatabaseController controller){
+			this.controller = controller;
 			try {
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
 				connection = DriverManager.getConnection(URL+DATABASE_NAME, USER_NAME, PASSWORD);
@@ -153,15 +157,19 @@ public class DatabaseConnection {
 					    
 					    TweeterClass tweeter = new TweeterClass(key_1, key_2, key_3, key_4, text, type, row_id, ref_id);
 					    
-					    Long tweet_id = tweeter.tweet(); //diese Methode gibt die TwitterID des Tweets als Long zurück
-				    
-					    saveIDofTweet(tweet_id, row_id);
-					    
-					    if(type.equals("response")){
-					    		saveIDofRefId(ref_id, row_id);					    	 
-					     }else if (type.equals("tweet")){
-					     }	
-					    
+					    long tweet_id = -1;
+						try { //diese Methode gibt die TwitterID des Tweets als Long zurueck
+							tweet_id = tweeter.tweet();
+							  saveIDofTweet(tweet_id, row_id);							    
+							  if(type.equals("response")){
+								  saveIDofRefId(ref_id, row_id);					    	 
+							  }else if (type.equals("tweet")){
+							    	 //nothing?
+							  }
+						} catch (TwitterException e) {//in case something went wrong tweeting, last id is saved and program exits
+							controller.saveLastTweet(row_id);
+							System.exit(0);
+						} 					  
 					}
 					
 					//System.out.println(resKeys.getInt(1));

@@ -41,27 +41,14 @@ class TweeterClass {
 			
 	}
 	
-	public Long tweet() {
+	public long tweet()throws TwitterException {
 		Long id = null;
 
-		if(type.equals("tweet")){
-
-			try {
-
-				 id = posting(key_1, key_2, key_3, key_4, text);
-			} catch (TwitterException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}else if(type.equals("response")){
-
-			try {
-				 id = replyingToTweet(ref_tweet_id, key_1, key_2, key_3, key_4, text);
-			} catch (TwitterException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		if(type.equals("tweet")){	
+			id = posting(key_1, key_2, key_3, key_4, text);				
+		}
+		else if(type.equals("response")){	
+			id = replyingToTweet(ref_tweet_id, key_1, key_2, key_3, key_4, text);			
 		}
 		return id;
 	}
