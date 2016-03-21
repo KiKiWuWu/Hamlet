@@ -86,6 +86,15 @@
     margin: 50px;
 }
 
+.panel {
+	background-color: inherit;
+	border: none;
+}
+
+#dhtext {
+	text-align: center;
+}
+
 /*============================*/
 #services {
 	background-color: #f5f5f5;
