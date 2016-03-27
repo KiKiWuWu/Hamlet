@@ -40,6 +40,8 @@ public class DatabaseConnection {
 		private final String PERSON_KEY3 = "access_token";
 		private final String PERSON_KEY4 = "access_token_secret";
 		
+		private final String PERSON_TWITTER_ID = "twitter_id";
+		
 		private TwitterDatabaseController controller;
 		private Connection connection;
 		private Statement statement;
@@ -50,6 +52,8 @@ public class DatabaseConnection {
 		private PreparedStatement insertLink;
 		private PreparedStatement updateTweetID;
 		private PreparedStatement updateReferenceTweetID;
+		
+		String speaker = "";
 
 		public DatabaseConnection(TwitterDatabaseController controller){
 			this.controller = controller;
@@ -139,11 +143,13 @@ public class DatabaseConnection {
 					     key_2 = resKeys.getString(PERSON_KEY2);
 					     key_3 = resKeys.getString(PERSON_KEY3);
 					     key_4 = resKeys.getString(PERSON_KEY4);
+					    // speaker = resKeys.getString(PERSON_TWITTER_ID);
 					     
 					     if(type.equals("response")){
 					      	ref_id = getRefId(row_id - 1); 	
 					     }else if (type.equals("tweet")){
 					    	 ref_id = null; 
+					    	 speaker = "";
 					     }	     		     
 					    
 					    try {
@@ -155,8 +161,9 @@ public class DatabaseConnection {
 						} 
 
 					    
-					    TweeterClass tweeter = new TweeterClass(key_1, key_2, key_3, key_4, text, type, row_id, ref_id);
-					    
+					    TweeterClass tweeter = new TweeterClass(key_1, key_2, key_3, key_4, speaker + " " +text, type, row_id, ref_id);
+					    speaker = resKeys.getString(PERSON_TWITTER_ID);
+
 					    long tweet_id = -1;
 						try { //diese Methode gibt die TwitterID des Tweets als Long zurueck
 							tweet_id = tweeter.tweet();
@@ -202,8 +209,10 @@ public class DatabaseConnection {
 				
 				 do 
 			      {	
+					
+					 
 			        String person_id = res.getString(TWEET_PID);
-			        String text = res.getString(TWEET_TEXT);
+			        String text = res.getString(TWEET_TEXT); // @last_speaker 
 			        String type = res.getString(TWEET_TYPE);
 			        row_id = res.getInt(TWEET_ID);
 
@@ -219,8 +228,8 @@ public class DatabaseConnection {
 				return -1;
 			}
 			
-		}
-		
+		}	
+
 		private boolean notSzeneTweet(String text) {
 			System.out.println("Wert ist: "+Pattern.matches("Act \\d Scene 1", text));
 				
