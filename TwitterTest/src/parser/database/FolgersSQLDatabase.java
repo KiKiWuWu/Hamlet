@@ -17,16 +17,22 @@ import java.util.Map;
 public class FolgersSQLDatabase implements FolgersDatabase{
 	
 	//general stuff
+	/** Name of the database */
 	private final String DATABASE_NAME = "hamlet";
+	/** Connection-details */
 	private final String URL = "jdbc:mysql://localhost:3306/";
+	/** Username for the database */
 	private final String USER_NAME = "root";
+	/** Password for the database */
 	private final String PASSWORD = "root";
 	
-	//TABLES
+	//I am the table
+	/** Table containing the tweets */
 	private final String TABLE_TWEET = "tweets";
+	/** Table containing informations about the characters and their accounts */
 	private final String TABLE_PERSON = "person";
 	
-	//COLUMNS
+	//COLUMNS, many not used, form completion's sake
 	private final String TWEET_ID = "id";
 	private final String TWEET_PID = "person_id";
 	private final String TWEET_TEXT = "text";
@@ -45,12 +51,17 @@ public class FolgersSQLDatabase implements FolgersDatabase{
 	private final String PERSON_IS_REPLACABLE = "replacable";
 	private final String PERSON_TWITTER_ID = "twitter_id";
 	
+	/** Connection to the database */
 	private Connection connection;
+	/** Current statement to be executed */
 	private Statement statement;
+	/** Containing results of the last query */
 	private ResultSet results;
+	/** Used to insert a person into {@code TABLE_PERSON} */
 	private PreparedStatement insertPerson;
+	/** Used to insert a tweet into {@code TABLE_TWEET} */
 	private PreparedStatement insertTweet;
-	private PreparedStatement getPerson;
+	/** Statement to confirm if the name of a person is replacable by their twitter-account-name */
 	private PreparedStatement getReplacable;
 
 	/**
@@ -87,10 +98,6 @@ public class FolgersSQLDatabase implements FolgersDatabase{
 					+ "( "
 					+ "? , ? , ?);");
 			
-			getPerson = connection.prepareStatement("SELECT " + PERSON_NAME
-					+ " FROM " + TABLE_PERSON
-					+ " WHERE" + PERSON_ID + " = ?");
-			
 			getReplacable = connection.prepareStatement("SELECT " + PERSON_NAME + "," + PERSON_TWITTER_ID
 					+ " FROM " + TABLE_PERSON
 					+ " WHERE " + PERSON_IS_REPLACABLE + " != 0");
@@ -99,21 +106,7 @@ public class FolgersSQLDatabase implements FolgersDatabase{
 		}
 		
 	}
-	
-	/**
-	 * Returns the ID corresponding to the name of an entry in the table TABLE_PERSON
-	 * @param name The name of the person you want to search for in the database
-	 * @return The ID of the person corresponding to the name, {@code -1} if there were no matches of an error occurred
-	 */
-	private int getIDfromName(String name){
-		try {
-			getPerson.setString(1, name);
-			return getPerson.executeQuery().getInt(1);
-		} catch (SQLException e) {
-			return -1;
-		}
-	}
-	
+
 	/**
 	 * Removes all values from the database for rebuilding
 	 */
@@ -132,8 +125,7 @@ public class FolgersSQLDatabase implements FolgersDatabase{
 		
 	/**
 	 * Writes an entry into the table TABLE_PERSON
-	 * @param {@link Person} to be added
-	 * @param keys Twitter-API-Keys, must be 4
+	 * @param person {@link Person} to be added
 	 * @return true if entry is inserted successfully <br> 
 	 * 		   false if wrong number of keys or SQL-Exception occurs
 	 */

@@ -5,6 +5,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * This class is used for changing the text of the tweet, insert hashtags, mentions et ceterum censeo Carthaginem esse delendam
+ * @author rom54494
+ *
+ */
 public class StringConverter {
 	
 	/** Contains the characters to be searched as keys and their replacement as values */

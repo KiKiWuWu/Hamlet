@@ -4,6 +4,11 @@ import parser.xmlParsing.XMLParser;
 
 import java.util.Map;
 
+/**
+ * Acts as a controller between database and parser 
+ * @author rom54494
+ *
+ */
 public class DatabaseController implements DBCInterface{
 	
 	/** Path to the CSV-File containing the necessary information about the characters */

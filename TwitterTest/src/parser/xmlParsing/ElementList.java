@@ -9,7 +9,7 @@ import parser.database.Tweet;
 
 /**
  * This class is designed to hold an {@link Element} representing the head of a tree and
- * extracts the data relevant for the database. 
+ * extracts the data relevant for the database from its children
  * @author rom54494
  *
  */
@@ -52,8 +52,7 @@ public class ElementList {
 	private StringConverter nameInserter;
 
 	/**
-	 * 
-	 * @param head
+	 * @param head The Element representing a scene of the plaz and the head of a XML-Subtree
 	 * @param parser may be null but no replacement will be done
 	 */
 	public ElementList(Element head, XMLParser parser) {
@@ -70,6 +69,8 @@ public class ElementList {
 	 * (not for stage-directions etc.)<br>
 	 * Will set {@code currentSpeaker} to {@code null} if no speaker can be
 	 * found.
+	 * @param currentElement The element from which the speaker will be read if possible
+	 * @return The speaker of the {@code currentElement} or empty String, if no speaker 
 	 */
 	private String updateSpeaker(Element currentElement) {
 		String tag = currentElement.getName();
@@ -99,10 +100,7 @@ public class ElementList {
 			}
 			String[] speakers = speaker.split(" ");
 			for(String s : speakers){
-
-				s = s.replace("#", "");
-
-
+				s = s.replace("#", "");//removes leading # from folger-id
 				currentTweets.add(new Tweet(s.trim(), line, null));
 			}
 		}
@@ -110,7 +108,7 @@ public class ElementList {
 
 	/**
 	 * Recursively goes through the XML and creates {@link Tweet}s when necessary
-	 * @param head {@link Element} to start parsing from
+	 * @param head Element to start parsing from
 	 * @param speaker the speaker in the parent Element, may be changed or kept for the Tweet
 	 */
 	private void parseTree(Element head, String speaker) {

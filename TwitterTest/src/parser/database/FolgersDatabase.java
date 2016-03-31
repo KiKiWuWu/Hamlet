@@ -21,7 +21,7 @@ public interface FolgersDatabase {
 	public boolean insertIntoPerson(Person person);
 	
 	/**
-	 * @param person the {@link Tweet} to be inserted into the database
+	 * @param tweet the {@link Tweet} to be inserted into the database
 	 * @return true if insertion was successful <br>
 	 * false if not
 	 */

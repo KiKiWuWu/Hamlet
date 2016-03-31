@@ -3,8 +3,12 @@ package parser.database;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.StringTokenizer;
 
+/**
+ * This class is used to parse the accounts from a csv into the database
+ * @author rom54494
+ *
+ */
 public class PersonParser {
 
 	/** Controller responsible for adding entries into the database */
@@ -26,7 +30,7 @@ public class PersonParser {
 			BufferedReader br = new BufferedReader(new FileReader(path));
 			Person person;
 			String[] tokens;
-			String line, name;
+			String line;
 			String[] keys = new String[4];
 			//skips header
 			br.readLine();

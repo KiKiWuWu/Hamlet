@@ -10,12 +10,12 @@ import java.util.Map;
 public interface DBCInterface {
 	/**
 	 * Inserts a name in a database
-	 * @param name Name of the person to be added
-	 * @param keys Twitter-API-Keys of the corresponding account
+	 * @param person The {@link Person} to be added into the database
 	 */
 	public void insertPerson(Person person);
+	
 	/**
-	 * Inserts an instance of {@link parser.database.xmalParsing.Tweet} into the database
+	 * Inserts an instance of {@link Tweet} into the database
 	 * @param tweet The tweet to be added
 	 */
 	public void insertLine(Tweet tweet);

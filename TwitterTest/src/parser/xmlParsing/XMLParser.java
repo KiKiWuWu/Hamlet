@@ -15,7 +15,7 @@ import parser.database.Tweet;
 import parser.xmlParsing.ElementList;
 
 /**
- * This class is resonsible for parsing the XML-file of the play.
+ * This class is responsible for parsing the XML-file of the play.
  * @author rom54494
  *
  */
@@ -52,6 +52,9 @@ public class XMLParser {
 		acts = new ArrayList<Element>(body.getChildren("div1", ns));
 	}
 	
+	/**
+	 * @return A map containing all replacable names and their replacement as values
+	 */
 	public Map<CharSequence, CharSequence> getMapping(){
 		return controller.getReplacableCharacters();
 	}
@@ -68,6 +71,7 @@ public class XMLParser {
 	 * Gives the controller a {@link Tweet} with the initial informations about the scene to follow
 	 * @param act the current act
 	 * @param scene the current scene
+	 * @return The constructed Tweet
 	 */
 	private Tweet constructInitialSceneTweet(int act, int scene){
 		return new Tweet("Regie", "Act " + act + " Scene " + scene, "tweet");
@@ -85,12 +89,6 @@ public class XMLParser {
 			int numScene = 0;
 			initScenes(act);
 			for(Element scene : scenes){
-
-
-
-				
-
-
 				//if(numScene == 1){return;}
 				if(numScene == 1){System.out.println("Parsing act " + (numAct+1));}
 
