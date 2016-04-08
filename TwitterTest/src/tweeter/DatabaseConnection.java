@@ -10,17 +10,19 @@ import java.util.regex.Pattern;
 
 public class DatabaseConnection {
 
-	//general stuff
+		/**GENERAL STUFF 
+		 * password and user name according to your xampp account settings
+		 * */
 		private final String DATABASE_NAME = "hamlet";
 		private final String URL = "jdbc:mysql://localhost:3306/";
 		private final String USER_NAME = "root";
 		private final String PASSWORD = "root";
 		
-		//TABLES
+		/**TABLES */
 		private final String TABLE_TWEET = "tweets";
 		private final String TABLE_PERSON = "person";
 		
-		//COLUMNS
+		/**COLUMNS */
 		private final String TWEET_ID = "id";
 		private final String TWEET_PID = "person_id";
 		private final String TWEET_TEXT = "text";
@@ -46,6 +48,9 @@ public class DatabaseConnection {
 		private PreparedStatement updateTweetID;
 		private PreparedStatement updateReferenceTweetID;
 
+		/**
+		 * setting up the server connection of mysql database
+		 */
 		public DatabaseConnection(){
 			try {
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -58,6 +63,9 @@ public class DatabaseConnection {
 			}
 		}
 		
+		/**
+		 * some mysql select and update requests
+		 */
 		public void prepareStatements(){
 			try {
 				updateTweetID = connection.prepareStatement("UPDATE " + TABLE_TWEET 
@@ -87,6 +95,13 @@ public class DatabaseConnection {
 			
 		}	
 		
+		
+		/**
+		 * returnes the TweetID of an already tweeted tweet of a specific row in the database (row_id)
+		 * this is needed to get the reference tweetID for an response-tweet
+		 * @param row_id
+		 * @return
+		 */
 		public Long getRefId(Integer row_id) {
 
 			Long refID = null;	
@@ -105,15 +120,20 @@ public class DatabaseConnection {
 		        }
 		        
 		    } catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return refID;	
 		}
 
-			
+		/**
+		 * first gets all necessary authentification keys for one account
+		 * then initiates a new Tweet in TweeterClass with commited params
+		 * @param person_id
+		 * @param text
+		 * @param type
+		 * @param row_id
+		 */
 		private void getKeys(String person_id, String text, String type, Integer row_id){
-			System.out.println("_______________________");
 
 			String key_1 = null, key_2 = null, key_3 = null, key_4 = null;
 			Long ref_id = null;			
@@ -139,16 +159,17 @@ public class DatabaseConnection {
 					     }	     		     
 					    
 					    try {
-							Thread.sleep(1000*10); 
+					    	/** a 62 second time frame to circumvent the twitter POST request limits*/
+							Thread.sleep(1000*62); 
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
-						} //62 seks
+						} 
 					    
 					    TweeterClass tweeter = new TweeterClass(key_1, key_2, key_3, key_4, text, type, row_id, ref_id);
 					    
-					    Long tweet_id = tweeter.tweet(); //diese Methode gibt die TwitterID des Tweets als Long zurück
-				    
+					    /**the following returns the TwitterID as a long */					    
+					    Long tweet_id = tweeter.tweet();
+					    
 					    saveIDofTweet(tweet_id, row_id);
 					    
 					    if(type.equals("response")){
@@ -158,15 +179,17 @@ public class DatabaseConnection {
 					    
 					}
 					
-					//System.out.println(resKeys.getInt(1));
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}					 
 		}		
 	
 	
-
+		/**
+		 * first gets all information from every row in the database (speaker_id, text
+		 * @param last_tweet
+		 * @return
+		 */
 		public int getAllTweets(int last_tweet){
 			
 			String query = "SELECT " + TWEET_PID + ", "+ TWEET_ID + ", " + TWEET_TYPE + ", " + TWEET_TEXT + " FROM "+ TABLE_TWEET;
@@ -200,20 +223,28 @@ public class DatabaseConnection {
 				 return row_id;
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return -1;
 			}
 			
 		}
 		
+		/**
+		 * checks if a new scene/ act starts
+		 * @param text
+		 * @return
+		 */
 		private boolean notSzeneTweet(String text) {
-			// TODO Auto-generated method stub
-			System.out.println("Wert ist: "+Pattern.matches("Act \\d Scene \\d", text));
 				
 			return Pattern.matches("Act \\d Scene \\d", text);
 		}
 
+		/**
+		 * saves the new tweetIDs into the databse
+		 * @param twitterID
+		 * @param row_id
+		 */
+		
 		public void saveIDofTweet(Long twitterID, Integer row_id) {
 			try {
 				updateTweetID.setLong(1, twitterID);
@@ -221,20 +252,22 @@ public class DatabaseConnection {
 				updateTweetID.execute();
 
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		
+		/**
+		 * saves the referenceID for response-tweets in the database
+		 * @param refID
+		 * @param row_id
+		 */
 		public void saveIDofRefId(Long refID, Integer row_id) {
-			System.out.print("test");
 			try {
 				updateReferenceTweetID.setLong(1, refID);
 				updateReferenceTweetID.setInt(2, row_id);				
 				updateReferenceTweetID.execute();
 
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}			
 		}
