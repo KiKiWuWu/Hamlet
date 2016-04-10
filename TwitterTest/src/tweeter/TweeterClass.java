@@ -1,4 +1,4 @@
-/* TwitterClient Application
+/** TwitterClient Application
 
  * Uses Twitter4j library (java)
  * Uses Twitter API 1.1
@@ -6,6 +6,7 @@
  * Can post, retweet, like a tweet and respond to a tweet when messageID is given
  * inspired from Elisha - Simple Developer
  */
+
 package tweeter;
 
 import java.util.Arrays;
@@ -40,7 +41,10 @@ class TweeterClass {
 		this.ref_tweet_id = ref_tweet_id;
 			
 	}
-	
+	/**
+	 * checks if we want to tweet or make a response-tweet
+	 * @return
+	 */
 	public long tweet()throws TwitterException {
 		Long id = null;
 
@@ -49,13 +53,23 @@ class TweeterClass {
 		}
 		else if(type.equals("response")){	
 			id = replyingToTweet(ref_tweet_id, key_1, key_2, key_3, key_4, text);			
+	
 		}
 		return id;
 	}
 
+	/**
+	 * this methode is retweeting a tweet (with a specific messageID)
+	 * Please note that a twitter user can't retweet his own tweet!
+	 * @param messageId
+	 * @param consumerKey
+	 * @param consumerSecret
+	 * @param accessToken
+	 * @param accessTokenSecret
+	 * @throws TwitterException
+	 */
 	private static void retweeting(long messageId, String consumerKey, String consumerSecret, String accessToken,
 			String accessTokenSecret) throws TwitterException {
-		// you cannot retweet your own tweet!
 		TwitterFactory factory = new TwitterFactory();
 		Twitter twitter4 = factory.getInstance();
 		twitter4.setOAuthConsumer(consumerKey, consumerSecret);
@@ -65,14 +79,21 @@ class TweeterClass {
 
 	}
 
+	/**
+	 * given a messageID this methode likes a tweet
+	 * @param messageId
+	 * @param consumerKey
+	 * @param consumerSecret
+	 * @param accessToken
+	 * @param accessTokenSecret
+	 * @throws TwitterException
+	 */
 	private static void likingATweet(long messageId, String consumerKey, String consumerSecret, String accessToken,
 			String accessTokenSecret) throws TwitterException {
-		// TODO Auto-generated method stub
 
 		TwitterFactory factory3 = new TwitterFactory();
 		Twitter twitter3 = factory3.getInstance();
 		twitter3.setOAuthConsumer(consumerKey, consumerSecret);
-		// Parameter von oben
 		AccessToken accessToken3 = new AccessToken(accessToken, accessTokenSecret);
 
 		twitter3.setOAuthAccessToken(accessToken3);
@@ -81,15 +102,20 @@ class TweeterClass {
 		logTwitterServerRespond(status3);
 	}
 
+	/**
+	 * this methode replies to a tweet (messgeID) 
+	 * @param messageId
+	 * @param consumerKey
+	 * @param consumerSecret
+	 * @param accessToken
+	 * @param accessTokenSecret
+	 * @param text
+	 * @return
+	 * @throws TwitterException
+	 */
 	private static long replyingToTweet(long messageId, String consumerKey, String consumerSecret, String accessToken,
 			String accessTokenSecret, String text) throws TwitterException {
-		// ist statisch gebunden an die TweetID
-		System.out.println("replyingToTweet");
-		System.out.println(messageId+" text: "+text+" keys  = " + consumerKey +" "+consumerSecret+" "+accessToken+" "+accessTokenSecret );
-
-	
 		String replyMessage = text;
-
 		
 		TwitterFactory factory2 = new TwitterFactory();
 		Twitter twitter2 = factory2.getInstance();
@@ -97,13 +123,9 @@ class TweeterClass {
 		AccessToken accessToken2 = new AccessToken(accessToken, accessTokenSecret);
 		twitter2.setOAuthAccessToken(accessToken2);
 		StatusUpdate statusUpdate2 = new StatusUpdate(replyMessage);
-
 		
 		statusUpdate2.setInReplyToStatusId(messageId);
-		//statusUpdate2.setPossiblySensitive(false); //hat nicht funktioniert...
-
 		
-		//hier liegt der Fehler:
 		Status status2 = twitter2.updateStatus(statusUpdate2);
 		
 		logTwitterServerRespond(status2);
@@ -113,28 +135,31 @@ class TweeterClass {
 
 	};
 
+	/**
+	 * this mehtode is responsible for tweeting 
+	 * it returnes the given messageID
+	 * @param consumerKey
+	 * @param consumerSecret
+	 * @param accessToken
+	 * @param accessTokenSecret
+	 * @param text
+	 * @return
+	 * @throws TwitterException
+	 */
 	private static long posting(String consumerKey, String consumerSecret, String accessToken, String accessTokenSecret, String text)
 			throws TwitterException {
-		System.out.println("posting a new tweet");
 		
-		// Instantiate a re-usable and thread-safe factory
+		/** Instantiate a re-usable and thread-safe factory */
 		TwitterFactory twitterFactory = new TwitterFactory();
-		// Instantiate a new Twitter instance
+		/** Instantiate a new Twitter instance */
 		Twitter twitter = twitterFactory.getInstance();
-		// setup OAuth Consumer Credentials
+		/** setup OAuth Consumer Credentials */
 		twitter.setOAuthConsumer(consumerKey, consumerSecret);
-		// setup OAuth Access Token
+		/** setup OAuth Access Token */
 		twitter.setOAuthAccessToken(new AccessToken(accessToken, accessTokenSecret));
 
-		// Instantiate and initialize a new twitter status update
+		/** Instantiate and initialize a new twitter status update */
 		StatusUpdate statusUpdate = new StatusUpdate(text);
-
-		// attach any media, if you want to
-		// statusUpdate.setMedia(
-		// //title of media
-		// "http://simpledeveloper.com"
-		// , new
-		// URL("https://si0.twimg.com/profile_images/1733613899/Published_Copy_Book.jpg").openStream());
 
 		Status status = twitter.updateStatus(statusUpdate);
 
@@ -147,11 +172,13 @@ class TweeterClass {
 		
 	};
 	
-	
-
+	/**
+	 * Log output response from Twitter Server
+	 * @param status
+	 */
 
 	public static void logTwitterServerRespond(Status status) {
-		// response from twitter server
+	
 		System.out.println("status.toString() = " + status.toString());
 
 		System.out.println("status.getInReplyToScreenName() = " + status.getInReplyToScreenName());

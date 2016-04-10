@@ -21,6 +21,13 @@ public class TwitterDatabaseController {
 		dc = new DatabaseConnection(this);	
 	}
 	
+	
+	/**
+	 * returnes the last tweeted ID of the database
+	 * the last tweet ID is saved in an external file named start.txt in the res folder
+	 * @return 
+	 */
+	
 	private int getLastTweet(){
 			try {
 				BufferedReader br = new BufferedReader(new FileReader(PATH));
@@ -41,12 +48,19 @@ public class TwitterDatabaseController {
 			e.printStackTrace();
 		}
 	}
-		
+	
+	
+	/**
+	 * checks the last tweeted ID
+	 * and invokes the methode getAllTweets
+	 */
 	private void runHamletTweets(){ 
 		
-		dc.prepareStatements();	//brauch ich anscheinend nicht....	
+		/**the methode prepareStatements is not necessary */
+		dc.prepareStatements();	
+		
 		last_tweet = getLastTweet();
-		System.out.println("LAST TWEET id: "+last_tweet);
+		/** System.out.println("LAST TWEET id: "+last_tweet);*/
 		
 		last_tweet = dc.getAllTweets(last_tweet);
 		System.out.println(last_tweet);
@@ -55,7 +69,10 @@ public class TwitterDatabaseController {
 		System.out.println("end");	
 		 
 	}
-	
+	/**
+	 * initialication of Database controllers
+	 * starting runHamletTweets methode
+	 */
 	public void run(){
 		initDatabaseConnectionControllers();
 		runHamletTweets(); 

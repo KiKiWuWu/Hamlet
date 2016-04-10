@@ -1,0 +1,964 @@
+
+
+/* ------------------------------------------ */
+/*             TABLE OF CONTENTS
+/* ------------------------------------------ */
+
+/*   01 - General & Basic Styles   */
+/*   02 - Header & Navigation      */
+/*   03 - Intro      			   */
+/*   04 - About		      		   */
+/*   05 - About-1	      		   */
+/*   06 - Skills				   */
+/*   07 - Services         		   */
+/*   08 - Features            	   */
+/*   09 - History				   */
+/*   10 - Statistic banner         */
+/*   11 - Portfolio        		   */
+/*   12 - Team					   */
+/*   13 - Pricing				   */
+/*   14 - Clients		 	  	   */
+/*   15 - Testimonials	      	   */
+/*   16 - Blog		 	  	   	   */
+/*   17 - Promo LIne	 	  	   */
+/*   18 - Contact Info 	  	   	   */
+/*   19 - Google Map 	  	   	   */
+/*   20 - Contacts	 	  	   	   */
+/*   21 - Footer		 	  	   */
+/*   22 - Scroll to Top	 	  	   */
+/*   23 - Contact Form Response    */
+
+
+/* SLIDING CAROUSEL
+===================================*/
+
+#myCarousel{
+	/*background-color: #88DDE8;*/
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	height: 500px;
+}
+
+.character_div{
+	background-color: #f5f5f5;
+	height: 100px;
+	padding: 20px 0px 20px 20px;
+	margin: 1% 0.5% 5% 0;
+}
+
+.character_div h1 {
+	font-size: large;
+	font-weight: bold;
+	margin-bottom: 0px;
+}
+
+.profil_image {
+	/*width: 60px;
+	height: 60px;
+	margin: 0 0 0 0;*/
+	max-width: 100%;
+    height: auto;
+}
+
+/*
+.item{
+	margin-bottom: 30px;
+	margin-top: 30px;
+}*()
+
+/*Bullet Points*/
+.carousel-indicators{
+	margin-top: 20px;
+	bottom: none;
+}
+
+
+#left_control, #right_control {
+	background: none;
+}
+
+
+#slider{
+	padding-top: 80px;
+    padding-bottom: 80px;
+    margin: 50px;
+}
+
+.panel {
+	background-color: inherit;
+	border: none;
+}
+
+.dhtext {
+	text-align: center;
+}
+
+.btn{
+	width: 300px;
+	margin: 0 auto;
+	display: block;
+
+}
+
+/*============================*/
+#services {
+	background-color: #f5f5f5;
+}
+
+i {
+    position: relative;
+    background-size: 20px;
+    background: url(../img/scroll_up.png);
+    bottom: 1px; // or however much you want to offset it by
+}
+
+.intro_buttons{
+	padding: 10px;
+
+}
+
+#twitter_icon {
+	max-width: 100%;
+    margin: 0px 0px 5px 10px;
+    
+
+    max-height: 25px;
+
+}
+
+#footer {
+	color:black;
+	font-weight: bold;
+}
+
+#uni {
+	color: #FFA42E;
+	font-weight: bold;
+}
+
+
+
+/* ==========================================================================
+   01. GENERAL & BASIC STYLES
+   ========================================================================== */
+
+#content_wrapper  {
+	overflow: hidden;
+}
+
+.animated{
+	visibility:hidden;
+}
+
+.visible{
+	visibility:visible;
+}
+
+       
+/*------------------------------------------*/
+/*	 Headers
+/*------------------------------------------*/
+
+h1, h2, h3, h4, h5, h6 {
+	margin-top: 0; 
+	margin-bottom: 10px;
+}
+
+/*------------------------------------------*/
+/*	 Lists
+/*------------------------------------------*/
+
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/*------------------------------------------*/
+/*	 Link Setting
+/*------------------------------------------*/
+
+a {
+	text-decoration: none;
+	-webkit-transition: all 250ms ease-in-out;
+	-moz-transition: all 250ms ease-in-out;
+	-o-transition: all 250ms ease-in-out;
+	-ms-transition: all 250ms ease-in-out;
+	transition: all 250ms ease-in-out;
+}
+
+a:hover {
+	color: #444;
+	text-decoration: none;
+}
+
+a:focus {
+	color: #f8f8f8;
+	outline: none;
+	border: none;
+	text-decoration: none;
+} 
+
+/*------------------------------------------*/
+/*	 Theme Button
+/*------------------------------------------*/
+
+.btn-theme {
+	background-color: #FF9D33;
+	color: #333;
+	font-size: 14px;
+	text-transform: uppercase;
+	font-weight: 700;
+	padding: 10px 20px;
+	-webkit-transition: all 300ms ease-in-out;
+	-moz-transition: all 300ms ease-in-out;
+	-o-transition: all 300ms ease-in-out;
+	-ms-transition: all 300ms ease-in-out;
+	transition: all 300ms ease-in-out;
+}
+
+.btn-theme:hover {
+	background-color: #d9a701;
+	color: #fff;
+}
+
+/*------------------------------------------*/
+/*	 Button Hover/Focus
+/*------------------------------------------*/
+
+.btn:focus {
+	outline: none;
+}
+
+.btn:focus {
+	color: #f8f8f8;
+	text-decoration: none;
+}
+
+/*------------------------------------------*/
+/*	 Section Titlebar
+/*------------------------------------------*/
+
+.titlebar {
+	margin-bottom: 60px;
+	text-align: center;
+}
+
+.titlebar h3 {
+	color: #222;
+	font-size: 24px;
+	font-weight: 300;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	margin-bottom: 10px;
+}
+
+.titlebar h2 {
+	color: #222;
+	font-size: 40px;
+	font-weight: 400;
+	text-transform: uppercase;
+}
+
+.titlebar h2:after {
+    display: block;
+    content: "";
+    height: 2px;
+    width: 200px;
+	background: #FF9D33;
+    margin: 15px auto;
+    position: relative;
+}
+
+
+
+/* ==========================================================================
+   02. HEADER & NAVIGATION
+   ========================================================================== */
+
+/*------------------------------------------*/
+/*	 Logo Image    
+/*------------------------------------------*/
+
+.navbar-brand {
+	padding: 18px 15px;
+}  
+     
+/*------------------------------------------*/
+/*	 Navigation Menu    
+/*------------------------------------------*/
+
+.navbar {	
+	margin-bottom: 0;
+	-webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+	padding: 8px 0px;
+	-webkit-transition: all 350ms ease-in-out;
+	-moz-transition: all 350ms ease-in-out;
+	-o-transition: all 350ms ease-in-out;
+	-ms-transition: all 350ms ease-in-out;
+	transition: all 350ms ease-in-out;
+}
+
+.navbar-fixed-top { 
+	background-color: rgba(30, 30, 30, 0.45);
+	border-bottom: none;
+}
+
+.navbar-nav > li > a {
+	color: #fff;
+	font-size: 14px;
+	line-height: 60px;
+	font-weight: 700;
+	text-transform: uppercase;
+	display: block;
+	padding: 0 15px;
+	-webkit-transition: all 100ms ease-in-out;
+	-moz-transition: all 100ms ease-in-out;
+	-o-transition: all 100ms ease-in-out;
+	-ms-transition: all 100ms ease-in-out;
+	transition: all 100ms ease-in-out;
+}
+
+/*------------------------------------------*/
+/*	 Navbar Scroll   
+/*------------------------------------------*/
+
+.scroll-fixed-navbar {
+	padding: 0;
+}
+
+.scroll-fixed-navbar.navbar-fixed-top { 
+	background-color: #262626;
+	border-bottom: 1px solid #222;
+}
+
+/*------------------------------------------*/
+/*	 Menu Hover
+/*------------------------------------------*/
+
+.navbar-nav > li > a:hover,
+.navbar-nav > li > a.selected-nav {
+	color: #FF9D33;
+	background-color: transparent;
+}
+
+/*------------------------------------------*/
+/*	 Responsive Menu    
+/*------------------------------------------*/
+
+.navbar-toggle {
+    position: relative;
+    float: right;
+	background-color: transparent;
+    padding: 10px;
+	margin: 13px 30px 13px 0;
+	border: none;
+	color: #fff;
+	border: 2px solid #ddd;
+}
+
+.navbar-toggle .icon-bar {
+	background-color: #ddd;
+}
+
+
+
+/* ==========================================================================
+   03. INTRO
+   ========================================================================== */
+
+#intro {
+	width: 100%;
+	background-repeat: repeat;
+	background-position: 0 0;
+	background-color: #1E2936; 
+	color: #fff;
+}
+
+/*------------------------------------------*/
+/*	 INTRO CONTENT
+/*------------------------------------------*/
+
+#intro_content {
+	padding-top: 190px;
+	padding-bottom: 140px;
+}
+
+/*------------------------------------------*/
+/*	 INTRO TEXT
+/*------------------------------------------*/
+
+#intro h2 {	
+	font-size: 75px;
+	font-weight: 800;
+	line-height: 85px;
+	text-transform: uppercase;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	letter-spacing: 1px;
+}
+
+#intro h3 {	
+	font-size: 34px;
+	font-weight: 800;
+	line-height: 34px;
+	text-transform: uppercase;
+	margin-bottom: 20px;
+}
+
+.intro_text p {	
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 28px;
+	margin-bottom: 25px;
+}
+
+/*------------------------------------------*/
+/*	 INTRO BUTTONS
+/*------------------------------------------*/
+
+.intro_buttons .btn-theme {
+	background-color: #4099ff;
+	color: #fff;
+	font-size: 16px;
+	font-weight: 700;
+	margin-right: 10px;
+	padding: 9px 18px;
+	text-transform: uppercase;
+}
+
+.intro_buttons .btn-theme:hover {
+	background-color: #151515;
+}
+
+/*------------------------------------------*/
+/*	 INTRO IMAGE
+/*------------------------------------------*/
+
+#intro_image .img-responsive { 
+	display: inline-block; 
+}
+
+
+
+/* ==========================================================================
+   04. ABOUT
+   ========================================================================== */
+
+#about {
+	padding-top: 80px;
+	padding-bottom: 80px;
+} 
+
+/*------------------------------------------*/
+/*	TABS HOLDER IMAGE
+/*------------------------------------------*/
+
+#tabs-holder .img-responsive { 
+	display: inline-block; 
+} 
+
+/*------------------------------------------*/
+/*	TABS
+/*------------------------------------------*/
+
+.nav-tabs {
+	border:none;
+}
+
+.nav-tabs > li > a {
+	color: #222;
+    font-size: 22px;
+	font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+	text-transform: uppercase;
+	padding: 0;
+	border: none;	
+}
+
+.nav-tabs > li:first-child {
+	border-right: 1px solid #999;
+	padding-right: 20px;
+}
+
+.nav-tabs > li:last-child {
+	padding-left: 20px;
+}
+
+.nav-tabs > li.active > a, 
+.nav-tabs > li.active > a:hover, 
+.nav-tabs > li.active > a:focus {
+	color: #FF9D33;
+	border: none;
+	padding: 0;
+}
+
+.nav-tabs > li > a:hover {
+	color: #FF9D33;
+	border: none;
+}
+
+/*------------------------------------------*/
+/*	Tab Description
+/*------------------------------------------*/
+
+.tab-content > .tab-pane {
+    padding: 25px 0;
+	border: none;
+	border: none;
+}
+
+.tab-content > .tab-pane p {
+	font-size: 16px;
+	line-height: 28px;
+	font-weight: 300;
+}
+
+.tab-content a {
+	margin-top: 20px;
+	margin-right: 10px;
+}
+
+
+
+/* ==========================================================================
+   05. ABOUT-1
+   ========================================================================== */
+
+#about-1 {
+	background-color: #f5f5f5; 
+	border-top: 1px solid #eee;
+	padding-top: 80px;
+	padding-bottom: 80px;
+} 
+   
+/*------------------------------------------*/
+/*	ACCORDION HOLDER IMAGE
+/*------------------------------------------*/
+
+#accordion-holder .img-responsive { 
+	display: inline-block; 
+}  
+
+/*------------------------------------------*/
+/*	ACCORDION
+/*------------------------------------------*/
+
+.panel-group .panel {
+    margin-bottom: 10px;
+    background: none;
+    border: none;
+    border-radius: 0;
+	-webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+/*------------------------------------------*/
+/*	Panel Title
+/*------------------------------------------*/
+
+.panel-heading {
+    padding: 0;
+    background: none !important;
+    border: 0 !important;
+}
+
+.panel-title {
+    color: #222;
+	font-size: 20px;
+	font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+	text-transform: uppercase;
+    border-bottom: 1px solid #ccc;
+    text-transform: uppercase;
+}
+
+.panel-title > a {
+    display: block;
+    color: #222;
+    padding: 12px 0;
+}
+
+.panel-title > a:hover {
+    color: #FF9D33;
+}
+
+/*------------------------------------------*/
+/*	Panel Title Icon
+/*------------------------------------------*/
+
+.panel-title i {
+	color: #FF9D33;
+	font-size: 28px;
+	margin-right: 10px;
+}
+
+/*------------------------------------------*/
+/*	Panel Content 
+/*------------------------------------------*/
+
+.panel-body {
+	color: #444;
+	font-size: 16px;
+	line-height: 28px;
+	font-weight: 300;
+}
+
+.panel-default > .panel-heading + .panel-collapse .panel-body {
+    border: 0
+}
+
+.panel-default > .panel-heading + .panel-collapse {
+    border: none;
+    border-top: none;
+}
+
+
+
+/* ==========================================================================
+   06. SKILLS
+   ========================================================================== */
+
+#skills {	
+	background-image: url(../img/parallax_bg/skills.jpg);
+	background-attachment: fixed !important;
+	background-repeat: no-repeat;
+	background-position: bottom center;		
+	background-size: cover;
+	padding-top: 80px;
+	padding-bottom: 80px;
+	color: #fff;
+}
+
+/*------------------------------------------*/
+/*	 SKILLS TITLEBAR
+/*------------------------------------------*/
+
+#skills .titlebar {
+	margin-bottom: 30px;
+}
+
+#skills .titlebar h2 {
+	color: #fff;
+}
+
+#skills .titlebar h2:after {
+    display: block;
+    content: "";
+    height: 2px;
+    width: 100px;
+	background: #FF9D33;
+    margin: 15px auto;
+    position: relative;
+}
+
+/*------------------------------------------*/
+/*	 Circle Progress Bars
+/*------------------------------------------*/
+
+.chart {
+	position: relative;
+	width: 130px;
+	height: 130px;
+	margin: 0 auto;
+}
+
+.chart canvas{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.chart span{
+	color: #a9a9a9;
+	font-size: 40px;
+	font-family: 'Oswald', sans-serif;
+	font-weight: 800;
+	line-height: 130px;
+	display: inline-block;
+}
+
+.chart span:after{
+	content: '%';
+	margin-left: 0;
+	font-size: 40px;
+}
+
+#skills h4 {
+    font-size: 24px;
+	font-weight: 700; 
+	margin-top: 25px;
+}
+
+
+
+/* ==========================================================================
+   07. SERVICES
+   ========================================================================== */
+
+#services {
+	padding-top: 80px;
+	padding-bottom: 80px;
+}
+
+/*------------------------------------------*/
+/*	  SERVICE IMAGE
+/*------------------------------------------*/
+
+#services_image .img-responsive { 
+	display: inline-block; 
+	margin-bottom: 80px;
+}
+
+/*------------------------------------------*/
+/*	  SERVICE BOX
+/*------------------------------------------*/
+
+.service-box {
+	margin-bottom: 40px;
+}
+
+.service-box h4 {
+	color: #222;
+	font-size: 20px;
+	font-weight: 400;
+}
+
+.service-box i {
+	margin-right: 10px;
+}
+
+.service-box p {
+	font-size: 16px;
+	line-height: 26px;
+	font-weight: 300;
+}
+
+/*------------------------------------------*/
+/*	  SERVICE BUTTONS
+/*------------------------------------------*/
+
+#service-buttons {
+	margin-top: 30px;
+}
+
+#service-buttons a {
+	margin-right: 20px;
+}
+
+
+
+/* ==========================================================================
+   08. FEATURES
+   ========================================================================== */
+ 
+#features {
+	background-image: url(../img/parallax_bg/features.jpg); 
+	background-attachment: fixed !important;
+	background-repeat: repeat;
+	background-position: 0 0;
+	padding-top: 80px;
+	padding-bottom: 40px;
+	color: #fff;
+}
+
+/*------------------------------------------*/
+/*	  FEATURES TITLEBAR
+/*------------------------------------------*/
+
+#features .titlebar h3, #features .titlebar h2 { 
+	color: #fff;
+}
+
+/*------------------------------------------*/
+/*	  FEATURE BOX
+/*------------------------------------------*/
+
+.features-box {
+    margin-bottom: 40px;
+}
+
+/*------------------------------------------*/
+/*	  Feature Icon
+/*------------------------------------------*/
+
+.icon-box {
+    width: 70px;
+    height: 70px;
+    line-height: 70px !important;
+    text-align: center;
+    float: left;
+    font-size: 22px;
+    color: #fff;
+}
+
+.icon-box i {
+	color: #FF9D33;
+    font-size: 60px;
+	margin-top: 10px;
+}
+
+/*------------------------------------------*/
+/*	  Feature Text
+/*------------------------------------------*/
+
+.features-text {
+    overflow: hidden;
+    padding: 0px 0px 0px 30px;
+}
+
+.features-text h4 {
+	font-size: 20px;
+	font-weight: 400;
+}
+
+.features-text p {
+	color: #ddd;
+	font-size: 16px;
+    font-weight: 300;
+	line-height: 26px;
+	padding-right: 20px;
+}
+
+
+
+/* ==========================================================================
+   12. TEAM
+   ========================================================================== */
+   
+#team {
+	padding-top: 80px;
+	padding-bottom: 30px;	
+}
+
+/*------------------------------------------*/
+/*	  TEAM MEMBER
+/*------------------------------------------*/
+
+.team-member {
+	margin-bottom: 50px;
+}
+
+.team-member .img-responsive {
+	display: inline-block;
+}
+
+/*------------------------------------------*/
+/*	  Team Member Meta
+/*------------------------------------------*/
+
+.team-img-meta h5 {
+	text-transform: uppercase;
+	font-weight: 800;
+	margin: 20px 0px 10px 0;
+}
+
+.team-img-meta h6 {
+	font-size: 14px;
+	color: #FF9D33;
+	text-transform: uppercase;
+	font-weight: 400;
+	margin-bottom: 10px;
+}
+
+.team-img-meta p {
+	color: #757575;
+	font-size: 16px;
+	line-height: 24px;
+	font-weight: 300;
+}
+
+/*------------------------------------------*/
+/*	  Team Member Social Icons 
+/*------------------------------------------*/
+
+.team-member-socials {
+	text-align: right;
+	display: inline-block;
+	margin: 10px auto;
+}
+
+.team-member-socials li {
+	float: left;
+    display: inline-block !important;
+    vertical-align: top;
+    width: auto !important;
+    clear: none !important;
+}
+
+.page_social {
+    width: 30px;
+    height: 30px;
+	color: #666;
+	font-size: 16px; 
+    text-align: center;
+    display: block;
+    text-decoration: none;
+	margin: 0 3px 5px;
+	-webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+	-webkit-transition: all 250ms ease-in-out;
+	-moz-transition: all 250ms ease-in-out;
+	-o-transition: all 250ms ease-in-out;
+	-ms-transition: all 250ms ease-in-out;
+	transition: all 250ms ease-in-out;
+}
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   21. FOOTER
+   ========================================================================== */ 
+ 
+#footer {
+	padding-top: 80px;
+	padding-bottom: 60px;
+	background-color: #024B61;
+}
+
+
+
+/* ==========================================================================
+   22. SCROLL TO TOP
+   ========================================================================== */
+
+#scrollUp {
+	display: none;
+	width: 40px;
+	height: 40px;
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	background-image: url(../img/scroll_up.png);
+	background-repeat: no-repeat;
+	background-position: 50% 48%;
+	background-color:rgba(225, 196, 0, 0.85);	
+	-webkit-transition: all 250ms linear;
+	-moz-transition: all 250ms linear;
+	transition: all 250ms linear;	
+}
+
+#scrollUp:hover {
+	background-color:rgba(225, 196, 0, 1);	
+}
+
+nav a#pull {  
+    display: none;  
+}
+
+
+
+
